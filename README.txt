@@ -4,3 +4,5 @@ If youre having trouble downloading the requests library then after downloading 
 Once youve donwloaded both you just need to right click the python file and select open with python 3.11
 
 Also i wanted to say this program is currently in early developement, so theres not much in it, sorry about that
+
+And one last thing i am not affiliated with wynncraft in any way, nor do i claim to be, this is only a project that uses the wynncraft public API to get information about territories
