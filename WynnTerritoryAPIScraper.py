@@ -44,6 +44,7 @@ elif x == "g" or x == "G":
             guildexists += 1
         else:
             print("There is no guild by that name sorry")
+            quit()
 
     if guildexists > 0:
         GuildAPI = requests.get("https://api.wynncraft.com/public_api.php?action=guildStats&command={}".format(guildnamee))
