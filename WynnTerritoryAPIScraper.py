@@ -25,7 +25,7 @@ if x == "t" or x == "T":
         print("----------------------------------------------------------------------------------------")
 
         time.sleep(600)
-elif x == "q" or x == "Q":
+elif x == "g" or x == "G":
     guildnamee = input("Please type in the name of the guild you want to view the info of: ")
     print("----------------------------------------------------------------------------------------")
 
