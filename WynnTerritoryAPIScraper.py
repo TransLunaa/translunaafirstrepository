@@ -2,74 +2,47 @@ import requests
 import json
 import time
 
-x = input("Please type the letter  t  if you want to view specific territory api and the letter  g  if you want to view specific guild api: ")
-print("Also if you want to view the other api after youve selected one just restart the script")
-if x == "t" or x == "T":
-    WynnAPI = requests.get('https://api.wynncraft.com/public_api.php?action=territoryList')
+guildnamee = input("Please type in the name of the guild you want to view the info of: ")
+print("----------------------------------------------------------------------------------------")
 
-    data = WynnAPI.text
+WynnAPI = requests.get('https://api.wynncraft.com/public_api.php?action=guildList')
 
-    parse_json = json.loads(data)
+data = WynnAPI.text
 
-    print("----------------------------------------------------------------------------------------")
-    territory_name = input("Please input the name of the territory: ")
-    print("----------------------------------------------------------------------------------------")
-    while True:
-        TerritoryOwner = parse_json['territories'][territory_name]['guild']
-        GuildPrefix = parse_json['territories'][territory_name]['guildPrefix']
-        Acquired = parse_json['territories'][territory_name]['acquired']
+parse_json = json.loads(data)
 
-        print("You are currently looking at the data of", territory_name)
-        print("The guild who currently owns the territory is:", TerritoryOwner, "aka", GuildPrefix)
-        print("The guild acquired this territory on", Acquired, "YY/MM/DD")
-        print("----------------------------------------------------------------------------------------")
+for guildeexists in parse_json["guilds"]:
+        guildeeexists = str(guildeexists)
+        for guildeeexists in parse_json["guilds"]:
+            if guildnamee == guildeeexists:
+                print("Succesfully found the guild by the name", guildnamee)
+                print("----------------------------------------------------------------------------------------")
+                while True:
+                    WynnAPI2 = requests.get('https://api.wynncraft.com/public_api.php?action=guildStats&command={}'.format(guildnamee))
 
-        time.sleep(600)
-elif x == "g" or x == "G":
-    guildnamee = input("Please type in the name of the guild you want to view the info of: ")
-    print("----------------------------------------------------------------------------------------")
+                    data2 = WynnAPI2.text
 
-    guildexists = 0
+                    parse_json2 = json.loads(data2)
 
-    WynnAPI = requests.get("https://api.wynncraft.com/public_api.php?action=guildList")
+                    GuildName = parse_json2["name"]
+                    GuildPrefix = parse_json2["prefix"]
+                    xp = parse_json2["xp"]
+                    TerritoryNumber = parse_json2["territories"]
+                    GuildDateOfCreation = parse_json2["createdFriendly"]
 
-    data = WynnAPI.text
+                    xp_left_until_next_level = 100-xp
 
-    parse_json = json.loads(data)
-
-    for guildname in parse_json["guilds"]:
-        if guildname == guildnamee:
-            print(guildnamee, "exists")
-            print("----------------------------------------------------------------------------------------")
-            guildexists += 1
-        else:
-            print("There is no guild by that name sorry")
-            quit()
-
-    if guildexists > 0:
-        GuildAPI = requests.get("https://api.wynncraft.com/public_api.php?action=guildStats&command={}".format(guildnamee))
-
-        GuildData = GuildAPI.text
-
-        guild_json = json.loads(GuildData)
-
-        ter = guild_json["territories"]
-        print(guildnamee, "has", ter, "territories")
-
-        created = guild_json["createdFriendly"]
-        print(guildnamee, "was created on", created)
-
-        experience = guild_json["xp"]
-        exp = 100-experience
-        print(guildnamee, "only needs", exp, "% more xp to level up")
-        print("----------------------------------------------------------------------------------------")
-        while True:
-            ter = guild_json["territories"]
-            print(guildnamee, "has", ter, "territories")
-
-            experience = guild_json["xp"]
-            exp = 100-experience
-            print(guildnamee, "only needs", exp, "% more xp to level up")
-            print("----------------------------------------------------------------------------------------")
-
-            time.sleep(600)
+                    print("The guild you are currently viewing is", GuildName, "aka", GuildPrefix)
+                    print(GuildName, "was created on", GuildDateOfCreation)
+                    if xp_left_until_next_level <= 20:
+                        print(GuildName, "only needs", xp_left_until_next_level, "more percent until the next level")
+                    elif xp_left_until_next_level > 20:
+                        print(GuildName, "needs", xp_left_until_next_level, "more percent until the next level")
+                    print(GuildName, "owns", TerritoryNumber, "territories")
+                    print("----------------------------------------------------------------------------------------")
+                    print("This text will update in 10 minutes")
+                    time.sleep(300)
+                    print("----------------------------------------------------------------------------------------")
+                    print("This text will update in 5 minutes")
+                    print("----------------------------------------------------------------------------------------")
+                    time.sleep(300)
