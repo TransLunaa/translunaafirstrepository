@@ -2,7 +2,7 @@ import requests
 import json
 import time
 
-x = input("Please type t if you want to view specific territory api and g if you want to view specific guild api: ")
+x = input("Please type the letter  t  if you want to view specific territory api and the letter  g  if you want to view specific guild api: ")
 print("Also if you want to view the other api after youve selected one just restart the script")
 if x == "t" or x == "T":
     WynnAPI = requests.get('https://api.wynncraft.com/public_api.php?action=territoryList')
