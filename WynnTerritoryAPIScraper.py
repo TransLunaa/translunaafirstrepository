@@ -61,6 +61,8 @@ if x == "g":
 
                         number_of_guild_members_online = 0
 
+                        names_of_guild_member_online = []
+
                         for myroot in parse_json3:
                             if (myroot != "request"):
                                 # debug("Room: "+myroot)
@@ -68,6 +70,7 @@ if x == "g":
                                 for myuser in parse_json3[myroot]:
                                     if myuser in guild_users:
                                         number_of_guild_members_online += 1
+                                        names_of_guild_member_online.append(myuser)
                                         # debug("Guild user online: "+myuser)
 
                         # btw a part of the code above this and below the next comment above this one was made with the assistance of chatgpt (not including the "only int")
@@ -82,8 +85,13 @@ if x == "g":
                         print("The guild", GuildName, "currently has", guild_users_length, "players in it")
                         if number_of_guild_members_online != 1:
                             print("and of those", guild_users_length, "players there are currently", number_of_guild_members_online, "guild members online")
+                            if number_of_guild_members_online != 0:
+                                print("Those people are:")
+                                print(names_of_guild_member_online)
                         elif number_of_guild_members_online == 1:
                             print("and of those", guild_users_length, "players there is currently", number_of_guild_members_online, "guild member online")
+                            print("That person is:")
+                            print(names_of_guild_member_online)
                         print("---------------------------------------------------------------------------------------------------------")
                         print("This text will update in 15 minutes")
                         time.sleep(300)
