@@ -13,7 +13,7 @@ print("or type in the letter  g  to view info on guilds")
 x = input()
 if x == "g":
     print("---------------------------------------------------------------------------------------------------------")
-    guildnamee = "Clear Skies"      # input("Please type in the name of the guild you want to view: ")
+    guildnamee = input("Please type in the name of the guild you want to view: ")
     print("---------------------------------------------------------------------------------------------------------")
     WynnAPI = requests.get('https://api.wynncraft.com/public_api.php?action=guildList')
 
@@ -70,8 +70,6 @@ if x == "g":
                                         number_of_guild_members_online += 1
                                         # debug("Guild user online: "+myuser)
 
-                        print(number_of_guild_members_online)
-
                         # btw a part of the code above this and below the next comment above this one was made with the assistance of chatgpt (not including the "only int")
 
                         print("The guild you are currently viewing is", GuildName, "aka", GuildPrefix)
@@ -82,7 +80,10 @@ if x == "g":
                         elif xp_left_until_next_level > 20:
                             print(GuildName, "needs", xp_left_until_next_level, "more percent until the next level")
                         print("The guild", GuildName, "currently has", guild_users_length, "players in it")
-                        print("and of those", guild_users_length, "players there are currently", number_of_guild_members_online, "guild members online")
+                        if number_of_guild_members_online != 1:
+                            print("and of those", guild_users_length, "players there are currently", number_of_guild_members_online, "guild members online")
+                        elif number_of_guild_members_online == 1:
+                            print("and of those", guild_users_length, "players there is currently", number_of_guild_members_online, "guild member online")
                         print("---------------------------------------------------------------------------------------------------------")
                         print("This text will update in 15 minutes")
                         time.sleep(300)
