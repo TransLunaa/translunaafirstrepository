@@ -60,7 +60,7 @@ if x == "g":
                         debug ("parsed json ok")
 
                         number_of_guild_members_online = 0
-
+ 
                         names_of_guild_member_online = []
 
                         for myroot in parse_json3:
@@ -87,11 +87,17 @@ if x == "g":
                             print("and of those", guild_users_length, "players there are currently", number_of_guild_members_online, "guild members online")
                             if number_of_guild_members_online != 0:
                                 print("Those people are:")
-                                print(names_of_guild_member_online)
+                                names_of_guild_member_online_below = []
+                                for names in names_of_guild_member_online:
+                                    names_of_guild_member_online_below.append(names)
+                                print(names_of_guild_member_online_below)
                         elif number_of_guild_members_online == 1:
                             print("and of those", guild_users_length, "players there is currently", number_of_guild_members_online, "guild member online")
                             print("That person is:")
-                            print(names_of_guild_member_online)
+                            names_of_guild_member_online_below = []
+                            for names in names_of_guild_member_online:
+                                names_of_guild_member_online_below.append(names)
+                            print(names_of_guild_member_online_below)
                         print("---------------------------------------------------------------------------------------------------------")
                         print("This text will update in 15 minutes")
                         time.sleep(300)
