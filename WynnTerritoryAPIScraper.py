@@ -8,7 +8,7 @@ def divider():
     print("-------------------------------------------------------------------------------------------------------")
 
 print("Please type in the letter that corresponds with what you want to see")
-print("g - guild info")
+print("g = guild info")
 divider()
 
 choice = input()
