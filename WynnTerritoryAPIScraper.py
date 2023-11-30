@@ -2,109 +2,97 @@ import requests
 import json
 import time
 
-debug_flag = 0
+def space():
+    print(" ")
+def divider():
+    print("-------------------------------------------------------------------------------------------------------")
 
-def debug(text):
-    if (debug_flag == 1):
-        print(text)
+print("Please type in the letter that corresponds with what you want to see")
+print("g - guild info")
+divider()
 
-print("Please type in the letter  t  if you want to view info on territories")
-print("or type in the letter  g  to view info on guilds")
-x = input()
-if x == "g":
-    print("---------------------------------------------------------------------------------------------------------")
-    guildnamee = input("Please type in the name of the guild you want to view: ")
-    print("---------------------------------------------------------------------------------------------------------")
-    WynnAPI = requests.get('https://api.wynncraft.com/public_api.php?action=guildList')
+choice = input()
 
-    data = WynnAPI.text
+divider()
+if choice == "g" or choice == "G":
+    guildnameinput = str(input("Please type in the name of the guild you want to view the info of: "))
+    
+    GuildAPI = requests.get("https://api.wynncraft.com/v3/guild/{}".format(guildnameinput))
 
-    parse_json = json.loads(data)
+    guild_data = GuildAPI.text
 
-    for guildeexists in parse_json["guilds"]:
-            guildeeexists = str(guildeexists)
-            for guildeeexists in parse_json["guilds"]:
-                if guildnamee == guildeeexists:
-                    print("Succesfully found the guild by the name", guildnamee)
-                    print("---------------------------------------------------------------------------------------------------------")
-                    while True:
-                        WynnAPI2 = requests.get('https://api.wynncraft.com/public_api.php?action=guildStats&command={}'.format(guildnamee))
+    parse_json = json.loads(guild_data)
 
-                        data2 = WynnAPI2.text
+    # Checks if the guild exists
+    if parse_json['name'] == None:
+        divider()
+        print("The guild you are looking for doesnt exist")
+        print("Please try again by restarting this program")
+        time.sleep(10)
+        quit()
+    else:
+        divider()
+        print("Succesfully found the guild by the name {}".format(guildnameinput))
+        divider()
 
-                        parse_json2 = json.loads(data2)
+    guildPrefix = parse_json['prefix']
+    guildLevel = parse_json['level']
+    guildXp = parse_json['xpPercent']
+    guildTerritories = parse_json['territories']
+    guildWars = parse_json['wars']
 
-                        GuildName = parse_json2["name"]
-                        GuildPrefix = parse_json2["prefix"]
-                        xp = parse_json2["xp"]
-                        xp_left_until_next_level = 100-xp
-                        GuildDateOfCreation = parse_json2["createdFriendly"]
-                        
-                        # Find the amount of members in a guild and find who is online (the who is online is still in developement)
+    # Finds the date of when the guild was created and makes it more understandable
+    arr = []
+    arr2 = []
+    for date in parse_json['created']:
+        arr.append(date)
+    x = 0
+    for i in range(10):
+        arr2.append(arr[x])
+        x += 1
+    easydate = ''.join(arr2)
+    
+    
+    # Finds the names of players online from the guild (btw ty dad for helping me code this part) and start of loop
+    while True:
+        GuildAPI = requests.get("https://api.wynncraft.com/v3/guild/{}".format(guildnameinput))
 
-                        guild_users = []
-                        guild_users_length = 0 # only int
+        guild_data = GuildAPI.text
 
-                        for memb in parse_json2["members"]:
-                            name = memb["name"]
-                            guild_users.append(name)
-                            guild_users_length += 1
+        parse_json = json.loads(guild_data)
 
-                        WynnAPI3 = requests.get("https://api.wynncraft.com/public_api.php?action=onlinePlayers")
+        memberList = []
+        memberOnlineList = []
+        memberNum = 0
+        memberOnlineNum = 0
+        for names in parse_json['members']:        
+            if (names != "total"):
+                for member_name in parse_json['members'][names]:
+                    memberList.append(member_name)
+                    memberNum += 1
 
-                        debug("data request ok")
+        playerListAPI = requests.get("https://api.wynncraft.com/v3/player")
 
-                        data3 = WynnAPI3.text
+        playerListData = playerListAPI.text
 
-                        parse_json3 = json.loads(data3)
-                        debug ("parsed json ok")
+        parse_json2 = json.loads(playerListData)
 
-                        number_of_guild_members_online = 0
- 
-                        names_of_guild_member_online = []
+        for myroot in parse_json2:
+            for myuser in parse_json2['players']:
+                if myuser in memberList:
+                    memberOnlineList.append(myuser)
+        memberOnlineList = list(dict.fromkeys(memberOnlineList))
+        memberOnlineNum = len(memberOnlineList)
+        
+        print("The guild you are currently looking at is", guildnameinput, "aka", guildPrefix)
+        print("The guild was created on", easydate)
+        if guildXp < 80:
+            print("The guild is currently at level", guildLevel, "and needs", 100-guildXp, "more xp to level up")
+        else:
+            print("The guild is currently at level", guildLevel, "and only needs", 100-guildXp, "more xp to level up")
+        print("The guild has warred", guildWars, "times and currently has", guildTerritories, "territories")
+        print("The guild currently has", memberNum, "members and of those", memberNum, "members there are currently", memberOnlineNum, "online")
+        print("and those", memberOnlineNum, "online members are:", memberOnlineList)
+        divider()
 
-                        for myroot in parse_json3:
-                            if (myroot != "request"):
-                                # debug("Room: "+myroot)
-
-                                for myuser in parse_json3[myroot]:
-                                    if myuser in guild_users:
-                                        number_of_guild_members_online += 1
-                                        names_of_guild_member_online.append(myuser)
-                                        # debug("Guild user online: "+myuser)
-
-                        # btw a part of the code above this and below the next comment above this one was made with the assistance of chatgpt (not including the "only int")
-
-                        print("The guild you are currently viewing is", GuildName, "aka", GuildPrefix)
-                        print("...........................................................")
-                        print(GuildName, "was created on", GuildDateOfCreation)
-                        if xp_left_until_next_level <= 20:
-                            print(GuildName, "only needs", xp_left_until_next_level, "more percent until the next level")
-                        elif xp_left_until_next_level > 20:
-                            print(GuildName, "needs", xp_left_until_next_level, "more percent until the next level")
-                        print("The guild", GuildName, "currently has", guild_users_length, "players in it")
-                        if number_of_guild_members_online != 1:
-                            print("and of those", guild_users_length, "players there are currently", number_of_guild_members_online, "guild members online")
-                            if number_of_guild_members_online != 0:
-                                print("Those people are:")
-                                names_of_guild_member_online_below = []
-                                for names in names_of_guild_member_online:
-                                    names_of_guild_member_online_below.append(names)
-                                print(names_of_guild_member_online_below)
-                        elif number_of_guild_members_online == 1:
-                            print("and of those", guild_users_length, "players there is currently", number_of_guild_members_online, "guild member online")
-                            print("That person is:")
-                            names_of_guild_member_online_below = []
-                            for names in names_of_guild_member_online:
-                                names_of_guild_member_online_below.append(names)
-                            print(names_of_guild_member_online_below)
-                        print("---------------------------------------------------------------------------------------------------------")
-                        print("This text will update in 15 minutes")
-                        time.sleep(300)
-                        print("---------------------------------------------------------------------------------------------------------")
-                        print("This text will update in 10 minutes")
-                        print("---------------------------------------------------------------------------------------------------------")
-                        time.sleep(300)
-                        print("This text will update in 5 minutes")
-                        print("---------------------------------------------------------------------------------------------------------")
-                        time.sleep(300)
+        time.sleep(600)
