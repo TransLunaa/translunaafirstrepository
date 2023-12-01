@@ -87,12 +87,13 @@ if choice == "g" or choice == "G":
         print("The guild you are currently looking at is", guildnameinput, "aka", guildPrefix)
         print("The guild was created on", easydate)
         if guildXp < 80:
-            print("The guild is currently at level", guildLevel, "and needs", 100-guildXp, "more xp to level up")
+            print("The guild is currently at level", guildLevel, "and needs", 100-guildXp, "more percent to level up")
         else:
-            print("The guild is currently at level", guildLevel, "and only needs", 100-guildXp, "more xp to level up")
-        print("The guild has warred", guildWars, "times and currently has", guildTerritories, "territories")
+            print("The guild is currently at level", guildLevel, "and only needs", 100-guildXp, "more percent to level up")
+        print("The guild has warred", guildWars, "times and currently owns", guildTerritories, "territories")
         print("The guild currently has", memberNum, "members and of those", memberNum, "members there are currently", memberOnlineNum, "online")
-        print("and those", memberOnlineNum, "online members are:", memberOnlineList)
+        if memberOnlineNum > 0:
+            print("and those", memberOnlineNum, "online members are:", memberOnlineList)
         divider()
 
         time.sleep(600)
