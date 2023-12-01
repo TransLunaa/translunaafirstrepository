@@ -96,7 +96,6 @@ if choice == "g" or choice == "G":
             print("and those", memberOnlineNum, "online members are:", memberOnlineList)
         divider()
         print("This text will update in 10 minutes")
-        divider()
         time.sleep(300)
         print("This text will update in 5 minutes")
         divider()
