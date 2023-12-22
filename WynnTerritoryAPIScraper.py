@@ -134,5 +134,5 @@ elif choice == "f" or choice == "F":
             print("Found a {} at these coordinates: x:{} y:{} z:{}".format(NPCType, xyz_coordinates[0], xyz_coordinates[1], xyz_coordinates[2]))
             xyz_coordinates = []
     divider()
-    
-    time.sleep(3600)
+
+    input()
