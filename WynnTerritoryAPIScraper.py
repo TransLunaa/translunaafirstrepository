@@ -135,4 +135,4 @@ elif choice == "f" or choice == "F":
             xyz_coordinates = []
     divider()
 
-    input()
+    f = input()
