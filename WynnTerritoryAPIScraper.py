@@ -8,6 +8,7 @@ def divider():
     print("-------------------------------------------------------------------------------------------------------")
 
 print("Please type in the letter that corresponds with what you want to see")
+divider()
 print("g = guild info")
 print("f = location finder")
 divider()
@@ -114,26 +115,24 @@ elif choice == "f" or choice == "F":
     z_coordinates = []
     xyz_coordinates = []
 
-    print("t = Tool Merchant")
-    NPCType = input("Please write the corresponding letter to which NPC you want to know the location of: ")
+    NPCType = input("Please type in the name of the npc you want to view the locations of: ")
     divider()
-    if NPCType == "t" or NPCType == "T":
-        for toolmerchant in parse_json4:
-            if toolmerchant['name'] == "Tool Merchant":
-                x_coordinates_ = toolmerchant['x']
-                x_coordinates.append(x_coordinates_)
-                xyz_coordinates.append(x_coordinates)
-                x_coordinates = []
-                y_coordinates_ = toolmerchant['y']
-                y_coordinates.append(y_coordinates_)
-                xyz_coordinates.append(y_coordinates)
-                y_coordinates = []
-                z_coordinates_ = toolmerchant['z']
-                z_coordinates.append(z_coordinates_)
-                xyz_coordinates.append(z_coordinates)
-                z_coordinates = []
-                print("Found a tool merchant at these coordinates: x:{} y:{} z:{}".format(xyz_coordinates[0], xyz_coordinates[1], xyz_coordinates[2]))
-                xyz_coordinates = []
-                divider()
+    for npcstr in parse_json4:
+        if npcstr['name'] == "{}".format(NPCType):
+            x_coordinates_ = npcstr['x']
+            x_coordinates.append(x_coordinates_)
+            xyz_coordinates.append(x_coordinates)
+            x_coordinates = []
+            y_coordinates_ = npcstr['y']
+            y_coordinates.append(y_coordinates_)
+            xyz_coordinates.append(y_coordinates)
+            y_coordinates = []
+            z_coordinates_ = npcstr['z']
+            z_coordinates.append(z_coordinates_)
+            xyz_coordinates.append(z_coordinates)
+            z_coordinates = []
+            print("Found a {} at these coordinates: x:{} y:{} z:{}".format(NPCType, xyz_coordinates[0], xyz_coordinates[1], xyz_coordinates[2]))
+            xyz_coordinates = []
+    divider()
     
-    time.sleep(600)
+    time.sleep(3600)
