@@ -9,6 +9,7 @@ def divider():
 
 print("Please type in the letter that corresponds with what you want to see")
 print("g = guild info")
+print("f = location finder")
 divider()
 
 choice = input()
@@ -17,9 +18,9 @@ divider()
 if choice == "g" or choice == "G":
     guildnameinput = str(input("Please type in the name of the guild you want to view the info of: "))
     
-    GuildAPI = requests.get("https://api.wynncraft.com/v3/guild/{}".format(guildnameinput))
+    guildAPI = requests.get("https://api.wynncraft.com/v3/guild/{}".format(guildnameinput))
 
-    guild_data = GuildAPI.text
+    guild_data = guildAPI.text
 
     parse_json = json.loads(guild_data)
 
@@ -55,9 +56,9 @@ if choice == "g" or choice == "G":
     
     # Finds the names of players online from the guild (btw ty dad for helping me code this part) and start of loop
     while True:
-        GuildAPI = requests.get("https://api.wynncraft.com/v3/guild/{}".format(guildnameinput))
+        guildAPI = requests.get("https://api.wynncraft.com/v3/guild/{}".format(guildnameinput))
 
-        guild_data = GuildAPI.text
+        guild_data = guildAPI.text
 
         parse_json = json.loads(guild_data)
 
@@ -100,3 +101,39 @@ if choice == "g" or choice == "G":
         print("This text will update in 5 minutes")
         divider()
         time.sleep(300)
+elif choice == "f" or choice == "F":
+    NPCLocationAPI = requests.get("https://api.wynncraft.com/v3/map/locations/markers")
+
+    NPCLocationData = NPCLocationAPI.text
+
+    parse_json4 = json.loads(NPCLocationData)
+
+    coordinates_full_list = []
+    x_coordinates = []
+    y_coordinates = []
+    z_coordinates = []
+    xyz_coordinates = []
+
+    print("t = Tool Merchant")
+    NPCType = input("Please write the corresponding letter to which NPC you want to know the location of: ")
+    divider()
+    if NPCType == "t" or NPCType == "T":
+        for toolmerchant in parse_json4:
+            if toolmerchant['name'] == "Tool Merchant":
+                x_coordinates_ = toolmerchant['x']
+                x_coordinates.append(x_coordinates_)
+                xyz_coordinates.append(x_coordinates)
+                x_coordinates = []
+                y_coordinates_ = toolmerchant['y']
+                y_coordinates.append(y_coordinates_)
+                xyz_coordinates.append(y_coordinates)
+                y_coordinates = []
+                z_coordinates_ = toolmerchant['z']
+                z_coordinates.append(z_coordinates_)
+                xyz_coordinates.append(z_coordinates)
+                z_coordinates = []
+                print("Found a tool merchant at these coordinates: x:{} y:{} z:{}".format(xyz_coordinates[0], xyz_coordinates[1], xyz_coordinates[2]))
+                xyz_coordinates = []
+                divider()
+    
+    time.sleep(600)
