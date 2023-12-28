@@ -10,7 +10,8 @@ def divider():
 print("Please type in the letter that corresponds with what you want to see")
 divider()
 print("g = guild info")
-print("f = location finder")
+print("f = npc finder")
+print("e = does this guild exist")
 divider()
 
 choice = input()
@@ -135,4 +136,21 @@ elif choice == "f" or choice == "F":
             xyz_coordinates = []
     divider()
 
-    f = input()
+    input()
+elif choice == "e" or choice == "E":
+    possibleGuildName = input("Please type in a guild name to check if it exists or not: ")
+
+    guildAPI = requests.get("https://api.wynncraft.com/v3/guild/{}".format(possibleGuildName))
+
+    guild_data = guildAPI.text
+
+    parse_json5 = json.loads(guild_data)
+
+    if parse_json5['name'] == None:
+        divider()
+        print("The guild by the name", possibleGuildName, "doesnt exist")
+        input()
+    else:
+        divider()
+        print("There exists a guild by the name", possibleGuildName)
+        input()
