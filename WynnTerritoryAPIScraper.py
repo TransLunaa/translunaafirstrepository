@@ -132,9 +132,12 @@ elif choice == "f" or choice == "F":
             z_coordinates.append(z_coordinates_)
             xyz_coordinates.append(z_coordinates)
             z_coordinates = []
-            print("Found a {} at these coordinates: x:{} y:{} z:{}".format(NPCType, xyz_coordinates[0], xyz_coordinates[1], xyz_coordinates[2]))
-            placeholder = ''.join(xyz_coordinates)
-            print(placeholder)
+            strxyz_coordinates = str(xyz_coordinates)
+            strxyz_coordinates = strxyz_coordinates.replace('[', '')
+            strxyz_coordinates = strxyz_coordinates.replace(']', '')
+            strxyz_coordinates = strxyz_coordinates.replace("'", '')
+            strxyz_coordinates = strxyz_coordinates.replace(',', '')
+            print("Found a {} at these coordinates:", strxyz_coordinates, "".format(NPCType))
             xyz_coordinates = []
     divider()
 
