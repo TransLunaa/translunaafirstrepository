@@ -137,7 +137,7 @@ elif choice == "f" or choice == "F":
             strxyz_coordinates = strxyz_coordinates.replace(']', '')
             strxyz_coordinates = strxyz_coordinates.replace("'", '')
             strxyz_coordinates = strxyz_coordinates.replace(',', '')
-            print("Found a {} at these coordinates:", strxyz_coordinates, "".format(NPCType))
+            print("Found a {} at these coordinates: {}".format(NPCType, strxyz_coordinates))
             xyz_coordinates = []
     divider()
 
