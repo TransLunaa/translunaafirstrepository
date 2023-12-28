@@ -133,10 +133,11 @@ elif choice == "f" or choice == "F":
             xyz_coordinates.append(z_coordinates)
             z_coordinates = []
             print("Found a {} at these coordinates: x:{} y:{} z:{}".format(NPCType, xyz_coordinates[0], xyz_coordinates[1], xyz_coordinates[2]))
+            print(' '.join(xyz_coordinates))
             xyz_coordinates = []
     divider()
 
-    input()
+    o = input()
 elif choice == "e" or choice == "E":
     possibleGuildName = input("Please type in a guild name to check if it exists or not: ")
 
@@ -149,8 +150,8 @@ elif choice == "e" or choice == "E":
     if parse_json5['name'] == None:
         divider()
         print("The guild by the name", possibleGuildName, "doesnt exist")
-        input()
+        o = input()
     else:
         divider()
         print("There exists a guild by the name", possibleGuildName)
-        input()
+        o = input()
