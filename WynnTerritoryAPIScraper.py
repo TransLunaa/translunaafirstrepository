@@ -11,7 +11,6 @@ print("Please type in the letter that corresponds with what you want to see")
 divider()
 print("g = guild info")
 print("f = npc finder")
-print("e = does this guild exist")
 divider()
 
 choice = input()
@@ -142,20 +141,3 @@ elif choice == "f" or choice == "F":
     divider()
 
     time.sleep(600)
-elif choice == "e" or choice == "E":
-    possibleGuildName = input("Please type in a guild name to check if it exists or not: ")
-
-    guildAPI = requests.get("https://api.wynncraft.com/v3/guild/{}".format(possibleGuildName))
-
-    guild_data = guildAPI.text
-
-    parse_json5 = json.loads(guild_data)
-
-    if parse_json5['name'] == None:
-        divider()
-        print("The guild by the name", possibleGuildName, "doesnt exist")
-        time.sleep(600)
-    else:
-        divider()
-        print("There exists a guild by the name", possibleGuildName)
-        print(600)
