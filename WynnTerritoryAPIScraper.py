@@ -163,4 +163,8 @@ elif choice == "p" or choice == "P":
     
     print("{} has the {} support rank".format(playerName, parse_json4['supportRank']))
 
+    print("{} have been in {} wars".format(playerName, parse_json4['globalData']['wars']))
+
+    print("{} has completed {} dungeons and {} raids".format(playerName, parse_json4['globalData']['dungeons']['total'], parse_json4['globalData']['raids']['total']))
+
     time.sleep(600)
