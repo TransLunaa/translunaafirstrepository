@@ -11,6 +11,7 @@ print("Please type in the letter that corresponds with what you want to see")
 divider()
 print("g = guild info")
 print("f = npc finder")
+print("p = player info")
 divider()
 
 choice = input()
@@ -107,7 +108,7 @@ elif choice == "f" or choice == "F":
 
     NPCLocationData = NPCLocationAPI.text
 
-    parse_json4 = json.loads(NPCLocationData)
+    parse_json3 = json.loads(NPCLocationData)
 
     coordinates_full_list = []
     x_coordinates = []
@@ -117,7 +118,7 @@ elif choice == "f" or choice == "F":
 
     NPCType = input("Please type in the name of the npc you want to view the locations of: ")
     divider()
-    for npcstr in parse_json4:
+    for npcstr in parse_json3:
         if npcstr['name'] == "{}".format(NPCType):
             x_coordinates_ = npcstr['x']
             x_coordinates.append(x_coordinates_)
@@ -139,5 +140,27 @@ elif choice == "f" or choice == "F":
             print("Found a {} at these coordinates: {}".format(NPCType, strxyz_coordinates))
             xyz_coordinates = []
     divider()
+
+    time.sleep(600)
+elif choice == "p" or choice == "P":
+    playerName = input("Please input the name of the player you want to view info about: ")
+    divider()
+    
+    playerAPI = requests.get("https://api.wynncraft.com/v3/player/{}".format(playerName))
+
+    playerData = playerAPI.text
+
+    parse_json4 = json.loads(playerData)
+
+    if parse_json4['online'] == True:
+        print("{} is currently online in world {}".format(playerName, parse_json4['server']))
+    else:
+        print("{} is currently offline".format(playerName))
+
+    print("{} has {} hours played in total".format(playerName, parse_json4['playtime']))
+
+    print("{} are apart of the guild {} and have the rank {} {}".format(playerName, parse_json4['guild']['name'], str(parse_json4['guild']['rank']).capitalize(), parse_json4['guild']['rankStars']))
+    
+    print("{} has the {} support rank".format(playerName, parse_json4['supportRank']))
 
     time.sleep(600)
