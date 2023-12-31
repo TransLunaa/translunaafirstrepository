@@ -159,7 +159,7 @@ elif choice == "p" or choice == "P":
 
     print("{} has {} hours played in total".format(playerName, parse_json4['playtime']))
 
-    print("{} are apart of the guild {} and have the rank {} {}".format(playerName, parse_json4['guild']['name'], str(parse_json4['guild']['rank']).capitalize(), parse_json4['guild']['rankStars']))
+    print("{} are apart of the guild {} and have the rank {}".format(playerName, parse_json4['guild']['name'], str(parse_json4['guild']['rank']).capitalize()))
     
     print("{} has the {} support rank".format(playerName, parse_json4['supportRank']))
 
