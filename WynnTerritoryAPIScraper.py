@@ -12,6 +12,7 @@ divider()
 print("g = guild info")
 print("f = npc finder")
 print("p = player info")
+print("e = exit")
 divider()
 
 choice = input()
@@ -26,17 +27,11 @@ if choice == "g" or choice == "G":
 
     parse_json = json.loads(guild_data)
 
-    # Checks if the guild exists
-    if parse_json['name'] == None:
-        divider()
-        print("The guild you are looking for doesnt exist")
-        print("Please try again by restarting this program")
-        time.sleep(10)
-        quit()
-    else:
-        divider()
-        print("Succesfully found the guild by the name {}".format(guildnameinput))
-        divider()
+    divider()
+        
+    print("Succesfully found the guild by the name {}".format(guildnameinput))
+    
+    divider()
 
     guildPrefix = parse_json['prefix']
     guildLevel = parse_json['level']
@@ -152,19 +147,36 @@ elif choice == "p" or choice == "P":
 
     parse_json4 = json.loads(playerData)
 
-    if parse_json4['online'] == True:
-        print("{} is currently online in world {}".format(playerName, parse_json4['server']))
+    if parse_json4['publicProfile'] == True:
+
+        if parse_json4['online'] == True:
+            print("{} is currently online in world {}".format(playerName, parse_json4['server']))
+        else:
+            print("{} is currently offline".format(playerName))
+
+        print("{} has {} hours played in total".format(playerName, parse_json4['playtime']))
+
+        if parse_json4['guild'] != None:
+            print("{} are apart of the guild {} and have the rank {}".format(playerName, parse_json4['guild']['name'], str(parse_json4['guild']['rank']).capitalize()))
+        else:
+            pass
+        
+        if parse_json4['supportRank'] != None:
+            print("{} has the {} support rank".format(playerName, parse_json4['supportRank']))
+        else:
+            print("{} does not own a support rank".format(playerName))
+
+        print("{} have been in {} wars".format(playerName, parse_json4['globalData']['wars']))
+
+        print("{} has completed {} dungeons and {} raids".format(playerName, parse_json4['globalData']['dungeons']['total'], parse_json4['globalData']['raids']['total']))
+
+        time.sleep(600)
     else:
-        print("{} is currently offline".format(playerName))
-
-    print("{} has {} hours played in total".format(playerName, parse_json4['playtime']))
-
-    print("{} are apart of the guild {} and have the rank {}".format(playerName, parse_json4['guild']['name'], str(parse_json4['guild']['rank']).capitalize()))
-    
-    print("{} has the {} support rank".format(playerName, parse_json4['supportRank']))
-
-    print("{} have been in {} wars".format(playerName, parse_json4['globalData']['wars']))
-
-    print("{} has completed {} dungeons and {} raid(s)".format(playerName, parse_json4['globalData']['dungeons']['total'], parse_json4['globalData']['raids']['total']))
-
-    time.sleep(600)
+        print("Sorry, the player you are looking for does not have a public profile")
+        time.sleep(3)
+elif choice == "e" or choice == "E":
+    quit()
+else:
+    print("Sorry, what you wrote is not associated with any category, please try again")
+    time.sleep(3)
+    quit()
