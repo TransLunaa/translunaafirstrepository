@@ -186,6 +186,7 @@ elif choice == "n" or choice == "N":
     divider()
     print("d = news posted on certain dates")
     print("p = poster of the news article")
+    print("e = exit")
     divider()
 
     choice2 = input()
@@ -203,6 +204,13 @@ elif choice == "n" or choice == "N":
         for news in parse_json5:
             if newsPoster in news['author']:
                 print(news['forumThread'])
+    elif choice2 == "e" or choice2 == "E":
+        quit()
+    else:
+        print("Sorry, what you wrote is not associated with any category, please try again")
+        time.sleep(3)
+        quit()
+    
 
     time.sleep(600)
 elif choice == "e" or choice == "E":
