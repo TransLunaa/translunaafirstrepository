@@ -12,6 +12,7 @@ divider()
 print("g = guild info")
 print("f = npc finder")
 print("p = player info")
+print("n = wynncraft news")
 print("e = exit")
 divider()
 
@@ -174,6 +175,36 @@ elif choice == "p" or choice == "P":
     else:
         print("Sorry, the player you are looking for does not have a public profile")
         time.sleep(3)
+elif choice == "n" or choice == "N":
+    newsAPI = requests.get("https://api.wynncraft.com/v3/latest-news")
+
+    newsData = newsAPI.text
+
+    parse_json5 = json.loads(newsData)
+
+    print("Please type in a letter that corresponds with a category you want to search")
+    divider()
+    print("d = news posted on certain dates")
+    print("p = poster of the news article")
+    divider()
+
+    choice2 = input()
+    divider()
+
+    if choice2 == "d" or choice2 == "D":
+        newsDate = input("Please type in a day of the month or name of the month or number of the year you want to search for: ")
+        divider()
+        for news in parse_json5:
+            if newsDate in news['date']:
+                print(news['forumThread'])
+    elif choice2 == "p" or choice2 == "P":
+        newsPoster = input("Pleast type in the name of someone who you want to see the articles from: ")
+        divider()
+        for news in parse_json5:
+            if newsPoster in news['author']:
+                print(news['forumThread'])
+
+    time.sleep(600)
 elif choice == "e" or choice == "E":
     quit()
 else:
