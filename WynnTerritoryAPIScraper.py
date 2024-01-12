@@ -13,6 +13,7 @@ print("g = guild info")
 print("f = npc finder")
 print("p = player info")
 print("n = wynncraft news")
+print("w = weapon database")
 print("e = exit")
 divider()
 
@@ -218,6 +219,21 @@ elif choice == "n" or choice == "N":
         print("Sorry, what you wrote is not associated with any category, please try again")
         time.sleep(3)
         quit()
+
+    time.sleep(600)
+elif choice == "w" or choice == "W":
+    weaponName = input("Please type in the name of the weapon you want to view the info of: ")
+
+    divider()
+
+    weaponAPI = requests.get("https://api.wynncraft.com/v3/item/search/{}".format(weaponName))
+
+    weaponData = weaponAPI.text
+
+    parse_json6 = json.loads(weaponData)
+
+    print("{} is a {} {} with {} attack speed and requires you to have combat level {}".format(weaponName, parse_json6[weaponName]['tier'].capitalize(), parse_json6[weaponName]['type'].capitalize(), parse_json6[weaponName]['attackSpeed'].replace('_', ' '), parse_json6[weaponName]['requirements']['level']))
+    print("{}'s average DPS is {}".format(weaponName, parse_json6[weaponName]['base']['averageDPS']))
 
     time.sleep(600)
 elif choice == "e" or choice == "E":
