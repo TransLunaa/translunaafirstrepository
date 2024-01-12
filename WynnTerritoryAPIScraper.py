@@ -205,7 +205,7 @@ elif choice == "n" or choice == "N":
         for news in parse_json5:
             if newsPoster in news['author']:
                 print(news['forumThread'])
-    elif choice2 == "w" or choice2 == "W":
+    elif choice2 == "n" or choice2 == "N":
         newsKeywords = input("Please type in a keyword to search articles that contain that word: ")
         divider()
         for news in parse_json5:
