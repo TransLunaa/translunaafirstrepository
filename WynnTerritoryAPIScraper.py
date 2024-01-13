@@ -155,33 +155,28 @@ elif choice == "p" or choice == "P":
 
     parse_json4 = json.loads(playerData)
 
-    if parse_json4['publicProfile'] == True:
-
-        if parse_json4['online'] == True:
-            print("{} is currently online in world {}".format(playerName, parse_json4['server']))
-        else:
-            print("{} is currently offline".format(playerName))
-
-        print("{} has {} hours played in total".format(playerName, parse_json4['playtime']))
-
-        if parse_json4['guild'] != None:
-            print("{} is apart of the guild {} and has the rank {}".format(playerName, parse_json4['guild']['name'], str(parse_json4['guild']['rank']).capitalize()))
-        else:
-            pass
-        
-        if parse_json4['supportRank'] != None:
-            print("{} has the {} support rank".format(playerName, parse_json4['supportRank']))
-        else:
-            print("{} does not own a support rank".format(playerName))
-
-        print("{} has been in {} wars".format(playerName, parse_json4['globalData']['wars']))
-
-        print("{} has completed {} dungeons and {} raids".format(playerName, parse_json4['globalData']['dungeons']['total'], parse_json4['globalData']['raids']['total']))
-
-        time.sleep(600)
+    if parse_json4['online'] == True:
+        print("{} is currently online in world {}".format(playerName, parse_json4['server']))
     else:
-        print("Sorry, the player you are looking for does not have a public profile")
-        time.sleep(3)
+        print("{} is currently offline".format(playerName))
+
+    print("{} has {} hours played in total".format(playerName, parse_json4['playtime']))
+
+    if parse_json4['guild'] != None:
+            print("{} is apart of the guild {} and has the rank {}".format(playerName, parse_json4['guild']['name'], str(parse_json4['guild']['rank']).capitalize()))
+    else:
+        pass
+        
+    if parse_json4['supportRank'] != None:
+        print("{} has the {} support rank".format(playerName, parse_json4['supportRank']))
+    else:
+        print("{} does not own a support rank".format(playerName))
+
+    print("{} has been in {} wars".format(playerName, parse_json4['globalData']['wars']))
+
+    print("{} has completed {} dungeons and {} raids".format(playerName, parse_json4['globalData']['dungeons']['total'], parse_json4['globalData']['raids']['total']))
+
+    time.sleep(600)
 elif choice == "n" or choice == "N":
     newsAPI = requests.get("https://api.wynncraft.com/v3/latest-news")
 
