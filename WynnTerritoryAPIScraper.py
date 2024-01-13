@@ -239,7 +239,16 @@ elif choice == "w" or choice == "W":
     parse_json6 = json.loads(weaponData)
 
     print("{} is a {} {} with {} attack speed and requires you to have combat level {}".format(weaponName, parse_json6[weaponName]['tier'].capitalize(), parse_json6[weaponName]['type'].capitalize(), parse_json6[weaponName]['attackSpeed'].replace('_', ' '), parse_json6[weaponName]['requirements']['level']))
+    print("and also these requirements:")
+    for weaponRequirements in parse_json6[weaponName]['requirements']:
+        if weaponRequirements != "level":
+            print("{}: {}".format(weaponRequirements.capitalize(), parse_json6[weaponName]['requirements'][weaponRequirements]))
+    divider()
     print("{}'s average DPS is {}".format(weaponName, parse_json6[weaponName]['base']['averageDPS']))
+    print("{} has these damage types:".format(weaponName))
+    for weaponDamageTypes in parse_json6[weaponName]['base']:
+        if weaponDamageTypes != "averageDPS":
+            print(weaponDamageTypes)
 
     time.sleep(600)
 elif choice == "t" or choice == "T":
