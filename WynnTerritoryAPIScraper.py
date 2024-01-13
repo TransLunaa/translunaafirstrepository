@@ -297,21 +297,26 @@ elif choice == "t" or choice == "T":
         easydate = ''.join(arr2)
 
         startX = abs(parse_json7[territoryName]['location']['start'][0])
-        startY = abs(parse_json7[territoryName]['location']['start'][1])
+        startZ = abs(parse_json7[territoryName]['location']['start'][1])
         endX = abs(parse_json7[territoryName]['location']['end'][0])
-        endY = abs(parse_json7[territoryName]['location']['end'][1])
+        endZ = abs(parse_json7[territoryName]['location']['end'][1])
 
         if startX > endX:
             sideX = startX-endX
         else:
             sideX = endX-startX
-        if startY > endY:
-            sideY = startY-endY
+        if startZ > endZ:
+            sideZ = startZ-endZ
         else:
-            sideY = endY-startY
-        territoryArea = sideX*sideY
+            sideZ = endZ-startZ
+        territoryArea = sideX*sideZ
 
         print("{}'s area is {} blocks squared".format(territoryName, territoryArea))
+        print("{}'s bottom-left corner is at {} {} (x, z)".format(territoryName, startX, startZ))
+        print("{}'s top-left corner is at {} {} (x, z)".format(territoryName, startX, endZ))
+        print("{}'s top-right corner is at {} {} (x, z)".format(territoryName, endX, endZ))
+        print("{}'s bottom-right corner is at {} {} (x, z)".format(territoryName, endX, startZ))
+        divider()
         while True:
             print("The owner of the territory you are currently looking at ({}) is {} aka {} and they acquired the territory on {}".format(territoryName, parse_json7[territoryName]['guild']['name'], parse_json7[territoryName]['guild']['prefix'], easydate))
             divider()
