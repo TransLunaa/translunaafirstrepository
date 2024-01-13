@@ -244,22 +244,52 @@ elif choice == "t" or choice == "T":
 
     parse_json7 = json.loads(territoryData)
 
-    territoryGuildName = []
+    print("Please type in a letter that corresponds with what you want to view: ")
+    divider()
+    print("w = what guild owns what")
+    print("i = info on a specific territory")
+    divider()
 
-    for territory in parse_json7:
-        territoryGuildName.append(parse_json7[territory]['guild']['name'])
-    territoryGuildNames = []
-    guildNum = []
-    for duplicates in territoryGuildName:
-        n = territoryGuildName.count(duplicates)
-        if n > 1:
-            if territoryGuildNames.count(duplicates) == 0:
-                territoryGuildNames.append(duplicates)
-                guildNum.append(n)
-    n = 0
-    while n < len(territoryGuildNames):
-        print("The guild", territoryGuildNames[n], "owns", guildNum[n], "territories")
-        n += 1
+    choice3 = input()
+    divider()
+
+    if choice3 == "w" or choice3 == "W":
+        territoryGuildName = []
+
+        for territory in parse_json7:
+            territoryGuildName.append(parse_json7[territory]['guild']['name'])
+        territoryGuildNames = []
+        guildNum = []
+        for duplicates in territoryGuildName:
+            n = territoryGuildName.count(duplicates)
+            if n > 1:
+                if territoryGuildNames.count(duplicates) == 0:
+                    territoryGuildNames.append(duplicates)
+                    guildNum.append(n)
+        n = 0
+        while n < len(territoryGuildNames):
+            print("The guild", territoryGuildNames[n], "owns", guildNum[n], "territories")
+            n += 1
+    elif choice3 == "i" or choice3 == "I":
+        territoryName = input("Please type in the name of the territory you want to view info about: ")
+        divider()
+
+        if territoryName in parse_json7:
+            print("Succesfully found a territory by the name {}".format(territoryName))
+            divider()
+
+        arr = []
+        arr2 = []
+        for date in parse_json7[territoryName]['acquired']:
+            arr.append(date)
+        x = 0
+        for i in range(10):
+            arr2.append(arr[x])
+            x += 1
+        easydate = ''.join(arr2)
+
+        print("The owner of the territory you are currently looking at ({}) is {} aka {} and they acquired the territory on {}".format(territoryName, parse_json7[territoryName]['guild']['name'], parse_json7[territoryName]['guild']['prefix'], easydate))
+        print("")
 
     time.sleep(600)
 elif choice == "e" or choice == "E":
