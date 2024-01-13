@@ -31,8 +31,13 @@ if choice == "g" or choice == "G":
     parse_json = json.loads(guild_data)
 
     divider()
-        
-    print("Succesfully found the guild by the name {}".format(guildnameinput))
+    
+    if "Error" not in parse_json:
+        print("Succesfully found the guild by the name {}".format(guildnameinput))
+    else:
+        print("Sorry but there doesnt seem to be a guild by the name {}, please try again".format(guildnameinput))
+        time.sleep(3)
+        quit()
     
     divider()
 
@@ -248,6 +253,7 @@ elif choice == "t" or choice == "T":
     divider()
     print("w = what guild owns what")
     print("i = info on a specific territory")
+    print("e = exit")
     divider()
 
     choice3 = input()
@@ -277,6 +283,8 @@ elif choice == "t" or choice == "T":
         if territoryName in parse_json7:
             print("Succesfully found a territory by the name {}".format(territoryName))
             divider()
+        else:
+            print("Sorry but there doesnt seem to be a territory called {}, please try again".format(territoryName))
 
         arr = []
         arr2 = []
@@ -290,6 +298,12 @@ elif choice == "t" or choice == "T":
 
         print("The owner of the territory you are currently looking at ({}) is {} aka {} and they acquired the territory on {}".format(territoryName, parse_json7[territoryName]['guild']['name'], parse_json7[territoryName]['guild']['prefix'], easydate))
         print("")
+    elif choice3 == "e" or choice3 == "E":
+        quit()
+    else:
+        print("Sorry, what you wrote is not associated with any category, please try again")
+        time.sleep(3)
+        quit()
 
     time.sleep(600)
 elif choice == "e" or choice == "E":
