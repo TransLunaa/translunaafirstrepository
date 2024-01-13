@@ -165,7 +165,7 @@ elif choice == "p" or choice == "P":
         print("{} has {} hours played in total".format(playerName, parse_json4['playtime']))
 
         if parse_json4['guild'] != None:
-            print("{} are apart of the guild {} and have the rank {}".format(playerName, parse_json4['guild']['name'], str(parse_json4['guild']['rank']).capitalize()))
+            print("{} is apart of the guild {} and has the rank {}".format(playerName, parse_json4['guild']['name'], str(parse_json4['guild']['rank']).capitalize()))
         else:
             pass
         
@@ -174,7 +174,7 @@ elif choice == "p" or choice == "P":
         else:
             print("{} does not own a support rank".format(playerName))
 
-        print("{} have been in {} wars".format(playerName, parse_json4['globalData']['wars']))
+        print("{} has been in {} wars".format(playerName, parse_json4['globalData']['wars']))
 
         print("{} has completed {} dungeons and {} raids".format(playerName, parse_json4['globalData']['dungeons']['total'], parse_json4['globalData']['raids']['total']))
 
