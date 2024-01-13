@@ -14,6 +14,7 @@ print("f = npc finder")
 print("p = player info")
 print("n = wynncraft news")
 print("w = weapon database")
+print("t = territory info")
 print("e = exit")
 divider()
 
@@ -234,6 +235,31 @@ elif choice == "w" or choice == "W":
 
     print("{} is a {} {} with {} attack speed and requires you to have combat level {}".format(weaponName, parse_json6[weaponName]['tier'].capitalize(), parse_json6[weaponName]['type'].capitalize(), parse_json6[weaponName]['attackSpeed'].replace('_', ' '), parse_json6[weaponName]['requirements']['level']))
     print("{}'s average DPS is {}".format(weaponName, parse_json6[weaponName]['base']['averageDPS']))
+
+    time.sleep(600)
+elif choice == "t" or choice == "T":
+    territoryAPI = requests.get("https://api.wynncraft.com/v3/guild/list/territory")
+
+    territoryData = territoryAPI.text
+
+    parse_json7 = json.loads(territoryData)
+
+    territoryGuildName = []
+
+    for territory in parse_json7:
+        territoryGuildName.append(parse_json7[territory]['guild']['name'])
+    territoryGuildNames = []
+    guildNum = []
+    for duplicates in territoryGuildName:
+        n = territoryGuildName.count(duplicates)
+        if n > 1:
+            if territoryGuildNames.count(duplicates) == 0:
+                territoryGuildNames.append(duplicates)
+                guildNum.append(n)
+    n = 0
+    while n < len(territoryGuildNames):
+        print("The guild", territoryGuildNames[n], "owns", guildNum[n], "territories")
+        n += 1
 
     time.sleep(600)
 elif choice == "e" or choice == "E":
