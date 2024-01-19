@@ -427,6 +427,10 @@ elif choice == "i" or choice == "I":
         print("{} is a tier 2 resource that requires you to have atleast {} level {}, and you can use it to make:".format(itemName, parse_json6[itemName]['requirements']['skills'], parse_json6[itemName]['requirements']['level']))
         for craftableItems in parse_json6[itemName]['craftable']:
             print(craftableItems.capitalize())
+    else:
+        print("Sorry but the word you typed in is not in the database, please try again once the program closes itself")
+        time.sleep(3)
+        quit()
     time.sleep(600)
 elif choice == "t" or choice == "T":
     territoryAPI = requests.get("https://api.wynncraft.com/v3/guild/list/territory")
