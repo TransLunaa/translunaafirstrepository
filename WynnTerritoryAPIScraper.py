@@ -20,6 +20,7 @@ choice = input()
 
 divider()
 if choice == "g" or choice == "G":
+    # Guild info
     guildnameinput = str(input("Please type in the name or prefix of the guild you want to view the info of: "))
     
     if len(guildnameinput) > 4:
@@ -117,6 +118,7 @@ if choice == "g" or choice == "G":
         divider()
         time.sleep(300)
 elif choice == "f" or choice == "F":
+    # NPC location info
     NPCLocationAPI = requests.get("https://api.wynncraft.com/v3/map/locations/markers")
 
     NPCLocationData = NPCLocationAPI.text
@@ -156,6 +158,7 @@ elif choice == "f" or choice == "F":
 
     time.sleep(600)
 elif choice == "p" or choice == "P":
+    # player info
     playerName = input("Please input the name of the player you want to view info about: ")
     divider()
     
@@ -188,6 +191,7 @@ elif choice == "p" or choice == "P":
 
     time.sleep(600)
 elif choice == "n" or choice == "N":
+    # news info
     newsAPI = requests.get("https://api.wynncraft.com/v3/latest-news")
 
     newsData = newsAPI.text
@@ -199,6 +203,7 @@ elif choice == "n" or choice == "N":
     print("d = news posted on certain dates")
     print("p = poster of the news article")
     print("n = name of the article")
+    print("a = all articles")
     print("e = exit")
     divider()
 
@@ -223,7 +228,9 @@ elif choice == "n" or choice == "N":
         for news in parse_json5:
             if newsKeywords in news['title']:
                 print(news['forumThread'])
-
+    elif choice2 == "a" or choice2 == "A":
+        for news in parse_json5:
+            print(news['forumThread'])
     elif choice2 == "e" or choice2 == "E":
         quit()
     else:
@@ -233,6 +240,7 @@ elif choice == "n" or choice == "N":
 
     time.sleep(600)
 elif choice == "i" or choice == "I":
+    # item database info
     itemName = input("Please type in the name of the item you want to view the info of: ")
 
     divider()
@@ -248,6 +256,7 @@ elif choice == "i" or choice == "I":
     allAccessoryTypes = ['ring', 'bracelet', 'necklace']
     allCharms = ['Charm of the Stone', 'Charm of the Light', 'Charm of the Void', 'Charm of the Worm']
 
+    # defines the main function for tome info
     def itemRequirementsStatsAndIdentifications():
         divider()
         if "base" in parse_json6[itemName]:
@@ -269,18 +278,22 @@ elif choice == "i" or choice == "I":
             print("{}'s bonus stats are:".format(itemName))
             for itemIdentifications in parse_json6[itemName]['identifications']:
                 print(" ")
-                print(itemIdentifications)
+                print("{}: {}".format(itemIdentifications, parse_json6[itemName]['identifications'][itemIdentifications]))
+            print(" ")
 
     if parse_json6[itemName]['internalName'] in allCharms:
+        # charms info
         print("{} is a {} charm you obtain from the raid {}, and {} requires you to have atleast combat level {}".format(itemName, parse_json6[itemName]['tier'], parse_json6[itemName]['dropMeta']['name'], itemName, parse_json6[itemName]['requirements']['level']))
         divider()
         if "identifications" in parse_json6[itemName]:
             print("{}'s bonus stats are:".format(itemName))
             for itemIdentifications in parse_json6[itemName]['identifications']:
                 print(" ")
-                print(itemIdentifications)
+                print("{}: {}".format(itemIdentifications, parse_json6[itemName]['identifications'][itemIdentifications]))
+            print(" ")
     elif "type" in parse_json6[itemName]:
         if parse_json6[itemName]['type'] in allWeaponTypes:
+            # weapon info
             print("{} is a {} {} with {} attack speed, {} powder slots and requires you to have atleast combat level {}".format(itemName, parse_json6[itemName]['tier'].capitalize(), parse_json6[itemName]['type'].capitalize(), parse_json6[itemName]['attackSpeed'].replace('_', ' '), parse_json6[itemName]['powderSlots'], parse_json6[itemName]['requirements']['level']))
             allWeaponRequirements = ['strength', 'dexterity', 'intelligence', 'agility', 'defence']
             itemAllRequirements = []
@@ -294,6 +307,7 @@ elif choice == "i" or choice == "I":
                             print("{}: {}".format(itemRequirements.capitalize(), parse_json6[itemName]['requirements'][itemRequirements]))
             divider()
             print("{}'s average DPS is {}".format(itemName, parse_json6[itemName]['base']['averageDPS']))
+            divider()
             if "base" in parse_json6[itemName]:
                 allDmgTypes = ['fireDamage', 'waterDamage', 'airDamage', 'thunderDamage', 'earthDamage']
                 itemAllDamageTypes = []
@@ -306,16 +320,18 @@ elif choice == "i" or choice == "I":
                         print("{} has rainbow damage".format(itemName))
                     else:
                         print(itemAllDamageTypes)
-            if "identifications" in parse_json6[itemName]:
                 divider()
+            if "identifications" in parse_json6[itemName]:
                 print("{}'s bonus stats are:".format(itemName))
                 for itemIdentifications in parse_json6[itemName]['identifications']:
                     print(" ")
-                    print(itemIdentifications)
+                    print("{}: {}".format(itemIdentifications, parse_json6[itemName]['identifications'][itemIdentifications]))
+                print(" ")
             if "lore" in parse_json6[itemName]:
                 divider()
                 print("{}'s lore says: {}".format(itemName, parse_json6[itemName]['lore']))
         elif parse_json6[itemName]['type'] in allArmorTypes:
+            # armor info
             if parse_json6[itemName]['type'] == "boots" or parse_json6[itemName]['type'] == "leggings":
                 print("{} is a pair of {} {} that requires you to have atleast combat level {}".format(itemName, parse_json6[itemName]['tier'], parse_json6[itemName]['type'], parse_json6[itemName]['requirements']['level']))
             else:
@@ -336,15 +352,16 @@ elif choice == "i" or choice == "I":
                     if itemRequirements != "level":
                         print("{}: {}".format(itemRequirements.capitalize(), parse_json6[itemName]['requirements'][itemRequirements]))
             if "identifications" in parse_json6[itemName]:
-                divider()
                 print("{}'s bonus stats are:".format(itemName))
                 for itemIdentifications in parse_json6[itemName]['identifications']:
                     print(" ")
-                    print(itemIdentifications)
+                    print("{}: {}".format(itemIdentifications, parse_json6[itemName]['identifications'][itemIdentifications]))
+                print(" ")
             if "lore" in parse_json6[itemName]:
                 divider()
                 print("{}'s lore says: {}".format(itemName, parse_json6[itemName]['lore']))
         elif parse_json6[itemName]['type'] in allAccessoryTypes:
+            # accessory info
             print("{} is a {} {} that requires you to have atleast combat level {}".format(itemName, parse_json6[itemName]['tier'], parse_json6[itemName]['accessoryType'], parse_json6[itemName]['requirements']['level']))
             divider()
             if "base" in parse_json6[itemName]:
@@ -366,18 +383,20 @@ elif choice == "i" or choice == "I":
                 print("{}'s bonus stats are:".format(itemName))
                 for itemIdentifications in parse_json6[itemName]['identifications']:
                     print(" ")
-                    print(itemIdentifications)
-                divider()
+                    print("{}: {}".format(itemIdentifications, parse_json6[itemName]['identifications'][itemIdentifications]))
+                print(" ")
             if "lore" in parse_json6[itemName]:
                 divider()
                 print("{}'s lore says: {}".format(itemName, parse_json6[itemName]['lore']))
     elif "tomeType" in parse_json6[itemName]:
+        # tome info
         if parse_json6[itemName]['raidReward'] == False:
             print("{} is a {} tome that requires you to have atleast combat level {}".format(itemName, parse_json6[itemName]['tier'], parse_json6[itemName]['requirements']['level']))
         else:
             print("{} is a {} tome that requires you to have atleast combat level {} and that you can obtain from {}".format(itemName, parse_json6[itemName]['tier'], parse_json6[itemName]['requirements']['level'], parse_json6[itemName]['dropMeta']['name']))
         itemRequirementsStatsAndIdentifications()
     elif "ingredientPositionModifiers" in parse_json6[itemName]:
+        # ingredient info
         print("{} is a tier {} material".format(itemName, parse_json6[itemName]['tier']))
         print("that is dropped by:")
         for mobThatDropsItem in parse_json6[itemName]['droppedBy']:
@@ -424,6 +443,7 @@ elif choice == "i" or choice == "I":
                 if itemPositionModifiers != 0:
                     print("{}: {}".format(itemPositionModifiers, parse_json6[itemName]['ingredientPositionModifiers'][itemPositionModifiers]))
     elif "craftable" in parse_json6[itemName]:
+        # resource info
         print("{} is a tier 2 resource that requires you to have atleast {} level {}, and you can use it to make:".format(itemName, parse_json6[itemName]['requirements']['skills'], parse_json6[itemName]['requirements']['level']))
         for craftableItems in parse_json6[itemName]['craftable']:
             print(craftableItems.capitalize())
@@ -433,6 +453,7 @@ elif choice == "i" or choice == "I":
         quit()
     time.sleep(600)
 elif choice == "t" or choice == "T":
+    # territory info
     territoryAPI = requests.get("https://api.wynncraft.com/v3/guild/list/territory")
 
     territoryData = territoryAPI.text
@@ -441,7 +462,7 @@ elif choice == "t" or choice == "T":
 
     print("Please type in a letter that corresponds with what you want to view: ")
     divider()
-    print("w = what guild owns what")
+    print("h = how many territories does a guild own")
     print("i = info on a specific territory")
     print("e = exit")
     divider()
@@ -449,7 +470,7 @@ elif choice == "t" or choice == "T":
     choice3 = input()
     divider()
 
-    if choice3 == "w" or choice3 == "W":
+    if choice3 == "h" or choice3 == "H":
         territoryGuildName = []
 
         for territory in parse_json7:
@@ -464,6 +485,7 @@ elif choice == "t" or choice == "T":
                     guildNum.append(n)
         n = 0
         while n < len(territoryGuildNames):
+            print(" ")
             print("The guild", territoryGuildNames[n], "owns", guildNum[n], "territories")
             n += 1
     elif choice3 == "i" or choice3 == "I":
