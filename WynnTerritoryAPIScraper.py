@@ -320,7 +320,6 @@ elif choice == "i" or choice == "I":
                         print("{} has rainbow damage".format(itemName))
                     else:
                         print(itemAllDamageTypes)
-                divider()
             if "identifications" in parse_json6[itemName]:
                 print("{}'s bonus stats are:".format(itemName))
                 for itemIdentifications in parse_json6[itemName]['identifications']:
