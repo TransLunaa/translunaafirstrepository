@@ -273,7 +273,6 @@ elif choice == "i" or choice == "I":
             for itemRequirements in parse_json6[itemName]['requirements']:
                 if itemRequirements != "level":
                     print(itemRequirements)
-            divider()
         if "identifications" in parse_json6[itemName]:
             print("{}'s bonus stats are:".format(itemName))
             for itemIdentifications in parse_json6[itemName]['identifications']:
@@ -377,7 +376,6 @@ elif choice == "i" or choice == "I":
                 for itemRequirements in parse_json6[itemName]['requirements']:
                     if itemRequirements != "level":
                         print(itemRequirements)
-                divider()
             if "identifications" in parse_json6[itemName]:
                 print("{}'s bonus stats are:".format(itemName))
                 for itemIdentifications in parse_json6[itemName]['identifications']:
