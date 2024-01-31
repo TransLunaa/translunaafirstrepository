@@ -255,10 +255,14 @@ elif choice == "i" or choice == "I":
     allArmorTypes = ['helmet', 'chestplate', 'leggings', 'boots']
     allAccessoryTypes = ['ring', 'bracelet', 'necklace']
     allCharms = ['Charm of the Stone', 'Charm of the Light', 'Charm of the Void', 'Charm of the Worm']
+    allRawStats = ['rawDefence', 'rawStrength', 'rawIntelligence', 'rawAgility', 'rawDexterity']
 
-    # defines the main function for tome info
+    # defines the main function
     def itemRequirementsStatsAndIdentifications():
         divider()
+        if "averageDPS" in parse_json6[itemName]['base']:
+            print("{}'s average DPS is {}".format(itemName, parse_json6[itemName]['base']['averageDPS']))
+            divider()
         if "base" in parse_json6[itemName]:
             print("{}'s stats are:".format(itemName))
             for itemStats in parse_json6[itemName]['base']:
@@ -277,8 +281,14 @@ elif choice == "i" or choice == "I":
             print("{}'s bonus stats are:".format(itemName))
             for itemIdentifications in parse_json6[itemName]['identifications']:
                 print(" ")
-                print("{}: {}".format(itemIdentifications, parse_json6[itemName]['identifications'][itemIdentifications]))
+                if itemIdentifications == "xpBonus":
+                    print("{}: {}".format(itemIdentifications, parse_json6[itemName]['identifications'][itemIdentifications]))
+                else:
+                    print("Bonus {}: {}".format(itemIdentifications, parse_json6[itemName]['identifications'][itemIdentifications]))
             print(" ")
+        if "lore" in parse_json6[itemName]:
+            divider()
+            print("{}'s lore says: {}".format(itemName, parse_json6[itemName]['lore']))
 
     if parse_json6[itemName]['internalName'] in allCharms:
         # charms info
@@ -288,7 +298,10 @@ elif choice == "i" or choice == "I":
             print("{}'s bonus stats are:".format(itemName))
             for itemIdentifications in parse_json6[itemName]['identifications']:
                 print(" ")
-                print("{}: {}".format(itemIdentifications, parse_json6[itemName]['identifications'][itemIdentifications]))
+                if itemIdentifications == "xpBonus":
+                    print("{}: {}".format(itemIdentifications, parse_json6[itemName]['identifications'][itemIdentifications]))
+                else:
+                    print("Bonus {}: {}".format(itemIdentifications, parse_json6[itemName]['identifications'][itemIdentifications]))
             print(" ")
     elif "type" in parse_json6[itemName]:
         if parse_json6[itemName]['type'] in allWeaponTypes:
@@ -305,8 +318,9 @@ elif choice == "i" or choice == "I":
                         if itemRequirements != "level":
                             print("{}: {}".format(itemRequirements.capitalize(), parse_json6[itemName]['requirements'][itemRequirements]))
             divider()
-            print("{}'s average DPS is {}".format(itemName, parse_json6[itemName]['base']['averageDPS']))
-            divider()
+            if "averageDPS" in parse_json6[itemName]['base']:
+                print("{}'s average DPS is {}".format(itemName, parse_json6[itemName]['base']['averageDPS']))
+                divider()
             if "base" in parse_json6[itemName]:
                 allDmgTypes = ['fireDamage', 'waterDamage', 'airDamage', 'thunderDamage', 'earthDamage']
                 itemAllDamageTypes = []
@@ -318,12 +332,20 @@ elif choice == "i" or choice == "I":
                     if itemAllDamageTypes == allDmgTypes:
                         print("{} has rainbow damage".format(itemName))
                     else:
-                        print(itemAllDamageTypes)
+                        dmgTypesLen = len(itemAllDamageTypes)
+                        dmgTypesNum = 0
+                        for i in range(dmgTypesLen):
+                            print("{}".format(itemAllDamageTypes[dmgTypesNum]))
+                            dmgTypesNum += 1
+                    divider()
             if "identifications" in parse_json6[itemName]:
                 print("{}'s bonus stats are:".format(itemName))
                 for itemIdentifications in parse_json6[itemName]['identifications']:
                     print(" ")
-                    print("{}: {}".format(itemIdentifications, parse_json6[itemName]['identifications'][itemIdentifications]))
+                    if itemIdentifications == "xpBonus" or itemIdentifications in allRawStats:
+                        print("{}: {}".format(itemIdentifications, parse_json6[itemName]['identifications'][itemIdentifications]))
+                    else:
+                        print("Bonus {}: {}".format(itemIdentifications, parse_json6[itemName]['identifications'][itemIdentifications]))
                 print(" ")
             if "lore" in parse_json6[itemName]:
                 divider()
@@ -353,7 +375,10 @@ elif choice == "i" or choice == "I":
                 print("{}'s bonus stats are:".format(itemName))
                 for itemIdentifications in parse_json6[itemName]['identifications']:
                     print(" ")
-                    print("{}: {}".format(itemIdentifications, parse_json6[itemName]['identifications'][itemIdentifications]))
+                    if itemIdentifications == "xpBonus":
+                        print("{}: {}".format(itemIdentifications, parse_json6[itemName]['identifications'][itemIdentifications]))
+                    else:
+                        print("Bonus {}: {}".format(itemIdentifications, parse_json6[itemName]['identifications'][itemIdentifications]))
                 print(" ")
             if "lore" in parse_json6[itemName]:
                 divider()
@@ -380,7 +405,10 @@ elif choice == "i" or choice == "I":
                 print("{}'s bonus stats are:".format(itemName))
                 for itemIdentifications in parse_json6[itemName]['identifications']:
                     print(" ")
-                    print("{}: {}".format(itemIdentifications, parse_json6[itemName]['identifications'][itemIdentifications]))
+                    if itemIdentifications == "xpBonus":
+                        print("{}: {}".format(itemIdentifications, parse_json6[itemName]['identifications'][itemIdentifications]))
+                    else:
+                        print("Bonus {}: {}".format(itemIdentifications, parse_json6[itemName]['identifications'][itemIdentifications]))
                 print(" ")
             if "lore" in parse_json6[itemName]:
                 divider()
@@ -394,6 +422,14 @@ elif choice == "i" or choice == "I":
         itemRequirementsStatsAndIdentifications()
     elif "ingredientPositionModifiers" in parse_json6[itemName]:
         # ingredient info
+        def ingredientInfoDef(a, b, c):
+            if parse_json6[itemName][a][b] < 0:
+                print("{} decreases the {} of an item by {}".format(itemName, c, parse_json6[itemName]['itemOnlyIDs']['durabilityModifier']))
+            elif parse_json6[itemName][a][b] > 0:
+                print("{} increases the {} of an item by {}".format(itemName, c, parse_json6[itemName]['itemOnlyIDs']['durabilityModifier']))
+            else:
+                print("{} doesnt change the {} of an item".format(itemName, c))
+            divider()
         print("{} is a tier {} material".format(itemName, parse_json6[itemName]['tier']))
         print("that is dropped by:")
         for mobThatDropsItem in parse_json6[itemName]['droppedBy']:
@@ -403,27 +439,9 @@ elif choice == "i" or choice == "I":
         for skillRequirement in parse_json6[itemName]['requirements']['skills']:
             print(skillRequirement.capitalize())
         divider()
-        if parse_json6[itemName]['itemOnlyIDs']['durabilityModifier'] < 0:
-            print("{} decreases the durability of an item by {}".format(itemName, parse_json6[itemName]['itemOnlyIDs']['durabilityModifier']))
-        elif parse_json6[itemName]['itemOnlyIDs']['durabilityModifier'] > 0:
-            print("{} increases the durability of an item by {}".format(itemName, parse_json6[itemName]['itemOnlyIDs']['durabilityModifier']))
-        else:
-            print("{} doesnt change the durability of an item".format(itemName))
-        divider()
-        if parse_json6[itemName]['consumableOnlyIDs']['duration'] < 0:
-            print("{} decreases the duration of an item by {}".format(itemName, parse_json6[itemName]['consumableOnlyIDs']['duration']))
-        elif parse_json6[itemName]['consumableOnlyIDs']['durabilityModifier'] > 0:
-            print("{} increases the duration of an item by {}".format(itemName, parse_json6[itemName]['consumableOnlyIDs']['duration']))
-        else:
-            print("{} doesnt change the duration of an item".format(itemName))
-        divider()
-        if parse_json6[itemName]['consumableOnlyIDs']['charges'] < 0:
-            print("{} decreases the charges of an item by {}".format(itemName, parse_json6[itemName]['consumableOnlyIDs']['charges']))
-        elif parse_json6[itemName]['consumableOnlyIDs']['charges'] > 0:
-            print("{} increases the charges of an item by {}".format(itemName, parse_json6[itemName]['consumableOnlyIDs']['charges']))
-        else:
-            print("{} doesnt change the charges of an item".format(itemName))
-        divider()
+        ingredientInfoDef('itemOnlyIDs', 'durabilityModifier', 'durability')
+        ingredientInfoDef('consumableOnlyIDs', 'duration', 'duration')
+        ingredientInfoDef('consumableOnlyIDs', 'charges', 'charges')
         print("the item {} creates have these requirements added to:".format(itemName))
         for skillRequirements in parse_json6[itemName]['itemOnlyIDs']:
             if skillRequirements != "durabilityModifier":
