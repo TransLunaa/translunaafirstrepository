@@ -257,7 +257,7 @@ elif choice == "i" or choice == "I":
     allCharms = ['Charm of the Stone', 'Charm of the Light', 'Charm of the Void', 'Charm of the Worm']
     allRawStats = ['rawDefence', 'rawStrength', 'rawIntelligence', 'rawAgility', 'rawDexterity']
 
-    # defines the main function
+    # defines the function for tomes
     def itemRequirementsStatsAndIdentifications():
         divider()
         if "averageDPS" in parse_json6[itemName]['base']:
