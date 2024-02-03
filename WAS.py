@@ -156,7 +156,7 @@ elif choice == "f" or choice == "F":
             xyz_coordinates = []
     divider()
 
-    time.sleep(600)
+    time.sleep(10)
 elif choice == "p" or choice == "P":
     # player info
     playerName = input("Please input the name of the player you want to view info about: ")
@@ -189,7 +189,7 @@ elif choice == "p" or choice == "P":
 
     print("{} has completed {} dungeons and {} raids".format(playerName, parse_json4['globalData']['dungeons']['total'], parse_json4['globalData']['raids']['total']))
 
-    time.sleep(600)
+    time.sleep(10)
 elif choice == "n" or choice == "N":
     # news info
     newsAPI = requests.get("https://api.wynncraft.com/v3/latest-news")
@@ -238,7 +238,7 @@ elif choice == "n" or choice == "N":
         time.sleep(3)
         quit()
 
-    time.sleep(600)
+    time.sleep(10)
 elif choice == "i" or choice == "I":
     # item database info
     itemName = input("Please type in the name of the item you want to view the info of: ")
@@ -466,7 +466,7 @@ elif choice == "i" or choice == "I":
         print("Sorry but the word you typed in is not in the database, please try again once the program closes itself")
         time.sleep(3)
         quit()
-    time.sleep(600)
+    time.sleep(10)
 elif choice == "t" or choice == "T":
     # territory info
     territoryAPI = requests.get("https://api.wynncraft.com/v3/guild/list/territory")
@@ -562,7 +562,7 @@ elif choice == "t" or choice == "T":
         time.sleep(3)
         quit()
 
-    time.sleep(600)
+    time.sleep(10)
 elif choice == "e" or choice == "E":
     quit()
 else:
