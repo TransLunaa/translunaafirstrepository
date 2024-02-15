@@ -566,7 +566,7 @@ while True:
         elif choice3 == "e" or choice3 == "E":
             quit()
         else:
-            print("Sorry, what you wrote is not associated with any category, please try again once the program closes itself")
+            print("Sorry, what you wrote is not associated with any category, please try again once the program restarts itself")
             time.sleep(3)
             divider()
             continue
@@ -575,7 +575,7 @@ while True:
     elif choice == "e" or choice == "E":
         quit()
     else:
-        print("Sorry, what you wrote is not associated with any category, please try again once the program closes itself")
+        print("Sorry, what you wrote is not associated with any category, please try again once the program restarts itself")
         time.sleep(3)
         divider()
         continue
