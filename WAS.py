@@ -22,7 +22,7 @@ while True:
     choice = input()
 
     divider()
-    if choice == "g" or choice == "G":
+    if choice.lower() == "g":
         # Guild info
         guildnameinput = str(input("Please type in the name or prefix of the guild you want to view the info of: "))
         
@@ -121,7 +121,7 @@ while True:
             print("This text will update in 5 minutes")
             divider()
             time.sleep(300)
-    elif choice == "f" or choice == "F":
+    elif choice.lower() == "f":
         # NPC location info
         NPCLocationAPI = requests.get("{}map/locations/markers".format(wynncraftAPI))
 
@@ -160,7 +160,7 @@ while True:
                 xyz_coordinates = []
         divider()
 
-    elif choice == "p" or choice == "P":
+    elif choice.lower == "p":
         # player info
         playerName = input("Please input the name of the player you want to view info about: ")
         divider()
@@ -193,7 +193,7 @@ while True:
         print("{} has completed {} dungeons and {} raids".format(playerName, parse_json4['globalData']['dungeons']['total'], parse_json4['globalData']['raids']['total']))
 
         divider()
-    elif choice == "n" or choice == "N":
+    elif choice.lower() == "n":
         # news info
         newsAPI = requests.get("{}latest-news".format(wynncraftAPI))
 
@@ -213,28 +213,28 @@ while True:
         choice2 = input()
         divider()
 
-        if choice2 == "d" or choice2 == "D":
+        if choice2.lower() == "d":
             newsDate = input("Please type in a day of the month or name of the month or number of the year you want to search for: ")
             divider()
             for news in parse_json5:
                 if newsDate in news['date']:
                     print(news['forumThread'])
-        elif choice2 == "p" or choice2 == "P":
+        elif choice2.lower() == "p":
             newsPoster = input("Pleast type in the name of someone who you want to see the articles from: ")
             divider()
             for news in parse_json5:
                 if newsPoster in news['author']:
                     print(news['forumThread'])
-        elif choice2 == "n" or choice2 == "N":
+        elif choice2.lower() == "n":
             newsKeywords = input("Please type in a keyword to search articles that contain that word: ")
             divider()
             for news in parse_json5:
                 if newsKeywords in news['title']:
                     print(news['forumThread'])
-        elif choice2 == "a" or choice2 == "A":
+        elif choice2.lower() == "a":
             for news in parse_json5:
                 print(news['forumThread'])
-        elif choice2 == "e" or choice2 == "E":
+        elif choice2.lower() == "e":
             quit()
         else:
             print("Sorry, what you wrote is not associated with any category, please try again once the program restarts itself")
@@ -243,7 +243,7 @@ while True:
             continue
         
         divider()
-    elif choice == "i" or choice == "I":
+    elif choice.lower() == "i":
         # item database info
         itemName = input("Please type in the name of the item you want to view the info of: ")
 
@@ -474,7 +474,7 @@ while True:
             continue
         
         continue
-    elif choice == "t" or choice == "T":
+    elif choice.lower() == "t":
         # territory info
         territoryAPI = requests.get("{}guild/list/territory".format(wynncraftAPI))
 
@@ -492,7 +492,7 @@ while True:
         choice3 = input()
         divider()
 
-        if choice3 == "h" or choice3 == "H":
+        if choice3.lower() == "h":
             territoryGuildName = []
 
             for territory in parse_json7:
@@ -510,7 +510,7 @@ while True:
                 print(" ")
                 print("The guild", territoryGuildNames[n], "owns", guildNum[n], "territories")
                 n += 1
-        elif choice3 == "i" or choice3 == "I":
+        elif choice3.lower() == "i":
             territoryName = input("Please type in the name of the territory you want to view info about: ")
             divider()
 
@@ -563,19 +563,19 @@ while True:
                 print("This text will update in 5 minutes")
                 divider()
                 time.sleep(300)
-        elif choice3 == "e" or choice3 == "E":
+        elif choice3.lower() == "e":
             quit()
         else:
-            print("Sorry, what you wrote is not associated with any category, please try again once the program restarts itself")
+            print("Sorry, what you wrote is not associated with any category, please try again once the program closes itself")
             time.sleep(3)
             divider()
             continue
 
         continue
-    elif choice == "e" or choice == "E":
+    elif choice.lower() == "e":
         quit()
     else:
-        print("Sorry, what you wrote is not associated with any category, please try again once the program restarts itself")
+        print("Sorry, what you wrote is not associated with any category, please try again once the program closes itself")
         time.sleep(3)
         divider()
         continue
