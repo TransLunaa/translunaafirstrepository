@@ -7,4 +7,4 @@ Also the dates in this program follow the YYYY-MM-DD format
 And one last thing i am not affiliated with wynncraft in any way, nor do i claim to be, this is only a project that uses the wynncraft public API
 
 Credits: Lucy for beta-testing and suggesting improvements
-	 My dad for helping with making code i couldnt make alone
+	My dad for helping with making code i couldnt make alone
