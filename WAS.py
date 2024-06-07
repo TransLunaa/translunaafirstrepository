@@ -8,21 +8,21 @@ def divider():
 wynncraftAPI = "https://api.wynncraft.com/v3/"
 
 while True:
-    print("Please type in the letter that corresponds with what you want to see")
+    print("Please type in the number that corresponds with what you want to see")
     divider()
-    print("g = guild info")
-    print("f = npc finder")
-    print("p = player info")
-    print("n = wynncraft news")
-    print("i = item database")
-    print("t = territory info")
-    print("e = exit")
+    print("1 = guild info")
+    print("2 = npc finder")
+    print("3 = player info")
+    print("4 = wynncraft news")
+    print("5 = item database")
+    print("6 = territory info")
+    print("7 = exit")
     divider()
 
     choice = input()
 
     divider()
-    if choice.lower() == "g":
+    if choice == "1":
         # Guild info
         guildnameinput = str(input("Please type in the name or prefix of the guild you want to view the info of: "))
         
@@ -121,7 +121,7 @@ while True:
             print("This text will update in 5 minutes")
             divider()
             time.sleep(300)
-    elif choice.lower() == "f":
+    elif choice == "2":
         # NPC location info
         NPCLocationAPI = requests.get("{}map/locations/markers".format(wynncraftAPI))
 
@@ -160,7 +160,7 @@ while True:
                 xyz_coordinates = []
         divider()
 
-    elif choice.lower == "p":
+    elif choice == "3":
         # player info
         playerName = input("Please input the name of the player you want to view info about: ")
         divider()
@@ -193,7 +193,7 @@ while True:
         print("{} has completed {} dungeons and {} raids".format(playerName, parse_json4['globalData']['dungeons']['total'], parse_json4['globalData']['raids']['total']))
 
         divider()
-    elif choice.lower() == "n":
+    elif choice == "4":
         # news info
         newsAPI = requests.get("{}latest-news".format(wynncraftAPI))
 
@@ -243,7 +243,7 @@ while True:
             continue
         
         divider()
-    elif choice.lower() == "i":
+    elif choice == "5":
         # item database info
         itemName = input("Please type in the name of the item you want to view the info of: ")
 
@@ -474,7 +474,7 @@ while True:
             continue
         
         continue
-    elif choice.lower() == "t":
+    elif choice == "6":
         # territory info
         territoryAPI = requests.get("{}guild/list/territory".format(wynncraftAPI))
 
@@ -572,7 +572,7 @@ while True:
             continue
 
         continue
-    elif choice.lower() == "e":
+    elif choice.lower() == "7":
         quit()
     else:
         print("Sorry, what you wrote is not associated with any category, please try again once the program closes itself")
