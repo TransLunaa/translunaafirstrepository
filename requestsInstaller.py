@@ -3,7 +3,7 @@ import tkinter as tk
 
 # installs the requests library
 batList = []
-print('Searching for "requestsInstaller.bat" this might take a while')
+print('Searching for "requestsInstaller.bat" this might take a while so sorry ;-;')
 
 for root, dirs, files in os.walk('C:\\'):
     if "requestsInstaller.bat" in files:
