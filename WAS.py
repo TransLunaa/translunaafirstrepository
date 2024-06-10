@@ -202,7 +202,8 @@ while True:
             for i in range(len(dungeonsList)):
                 print("{} of the dungeons completed in total is the {} dungeon".format(parse_json4['globalData']['dungeons']['list'][dungeonsList[dungeonsAndRaidsNum]], dungeonsList[dungeonsAndRaidsNum]))
                 dungeonsAndRaidsNum += 1
-            print(" ")
+            if parse_json4['globalData']['raids']['total'] > 0:
+                print(" ")
             raidList = []
             for raids in parse_json4['globalData']['raids']['list']:
                 raidList.append(raids)
