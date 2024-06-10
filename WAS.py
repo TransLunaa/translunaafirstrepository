@@ -67,7 +67,6 @@ while True:
             x += 1
         easydate = ''.join(arr2)
         
-        
         # Finds the names of players online from the guild (btw ty dad for helping me code this part) and start of loop
         while True:
             if len(guildnameinput) > 4:
@@ -179,20 +178,40 @@ while True:
         print("{} has {} hours played in total".format(playerName, parse_json4['playtime']))
 
         if parse_json4['guild'] != None:
-                print("{} is apart of the guild {} and has the rank {}".format(playerName, parse_json4['guild']['name'], str(parse_json4['guild']['rank']).capitalize()))
-        else:
-            pass
-            
+                print("{} is apart of the guild {} ({}) and has the rank {}".format(playerName, parse_json4['guild']['name'], parse_json4['guild']['prefix'], str(parse_json4['guild']['rank']).capitalize()))
+
         if parse_json4['supportRank'] != None:
             print("{} has the {} support rank".format(playerName, parse_json4['supportRank']))
         else:
             print("{} does not own a support rank".format(playerName))
 
-        print("{} has been in {} wars".format(playerName, parse_json4['globalData']['wars']))
+        if parse_json4['globalData']['wars'] > 0:
+            print("{} has been in {} wars".format(playerName, parse_json4['globalData']['wars']))
 
         print("{} has completed {} dungeons and {} raids".format(playerName, parse_json4['globalData']['dungeons']['total'], parse_json4['globalData']['raids']['total']))
-
         divider()
+        dungeonsAndRaidsChoice = input("Do you want to view more info on raids/dungeons? (please type in the letter y if yes): ")
+        divider()
+        if dungeonsAndRaidsChoice.lower() == "y":
+            print("From the {} dungeons and {} raids {} has completed:".format(parse_json4['globalData']['raids']['total'], parse_json4['globalData']['dungeons']['total'], playerName))
+            divider()
+            dungeonsList = []
+            dungeonsAndRaidsNum = 0
+            for dungeons in parse_json4['globalData']['dungeons']['list']:
+                dungeonsList.append(dungeons)
+            for i in range(len(dungeonsList)):
+                print("{} of the dungeons completed in total is the {} dungeon".format(parse_json4['globalData']['dungeons']['list'][dungeonsList[dungeonsAndRaidsNum]], dungeonsList[dungeonsAndRaidsNum]))
+                dungeonsAndRaidsNum += 1
+            print(" ")
+            raidList = []
+            for raids in parse_json4['globalData']['raids']['list']:
+                raidList.append(raids)
+            dungeonsAndRaidsNum = 0
+            for i in range(len(raidList)):
+                print("{} of the raids completed in total is {}".format(parse_json4['globalData']['raids']['list'][raidList[dungeonsAndRaidsNum]], raidList[dungeonsAndRaidsNum]))
+                dungeonsAndRaidsNum += 1
+        if dungeonsAndRaidsChoice.lower() == "y":
+            divider()
     elif choice.lower() == "n":
         # news info
         newsAPI = requests.get("{}latest-news".format(wynncraftAPI))
@@ -241,7 +260,7 @@ while True:
             time.sleep(3)
             divider()
             continue
-        
+            
         divider()
     elif choice.lower() == "i":
         # item database info
@@ -575,7 +594,7 @@ while True:
     elif choice.lower() == "e":
         quit()
     else:
-        print("Sorry, what you wrote is not associated with any category, please try again once the program closes itself")
+        print("Sorry, what you wrote is not associated with any category, please try again")
         time.sleep(3)
         divider()
         continue
