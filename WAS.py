@@ -44,7 +44,7 @@ while True:
         else:
             print("Sorry but there doesnt seem to be a guild by the name {}, please try again once the program restarts itself".format(guildnameinput))
             time.sleep(3)
-            os.system('cls')
+            divider()
             continue
         
         divider()
@@ -257,7 +257,7 @@ while True:
         else:
             print("Sorry, what you wrote is not associated with any category, please try again once the program restarts itself")
             time.sleep(3)
-            os.system('cls')
+            divider()
             continue
             
         divider()
@@ -497,7 +497,7 @@ while True:
         else:
             print("Sorry but the word you typed in is not in the database, please try again once the program restarts itself")
             time.sleep(3)
-            os.system('cls')
+            divider()
             continue
         
         continue
@@ -548,7 +548,7 @@ while True:
             else:
                 print("Sorry but there doesnt seem to be a territory called {}, please try again once the program restarts itself".format(territoryName))
                 time.sleep(3)
-                os.system('cls')
+                divider()
                 continue
 
             arr = []
@@ -591,7 +591,7 @@ while True:
         else:
             print("Sorry, what you wrote is not associated with any category, please try again once the program closes itself")
             time.sleep(3)
-            os.system('cls')
+            divider()
             continue
 
         continue
@@ -602,5 +602,5 @@ while True:
     else:
         print("Sorry, what you wrote is not associated with any category, please try again")
         time.sleep(3)
-        os.system('cls')
+        divider()
         continue
