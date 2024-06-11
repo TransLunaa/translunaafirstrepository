@@ -1,6 +1,7 @@
 import requests
 import json
 import time
+import os
 
 def divider():
     print("-------------------------------------------------------------------------------------------------------")
@@ -16,6 +17,7 @@ while True:
     print("n = wynncraft news")
     print("i = item database")
     print("t = territory info")
+    print("c = clear everything in the terminal")
     print("e = exit")
     divider()
 
@@ -42,7 +44,7 @@ while True:
         else:
             print("Sorry but there doesnt seem to be a guild by the name {}, please try again once the program restarts itself".format(guildnameinput))
             time.sleep(3)
-            divider()
+            os.system('cls')
             continue
         
         divider()
@@ -115,11 +117,7 @@ while True:
             if memberOnlineNum > 0:
                 print("and those", memberOnlineNum, "online members are:", memberOnlineList)
             divider()
-            print("This text will update in 10 minutes")
-            time.sleep(300)
-            print("This text will update in 5 minutes")
-            divider()
-            time.sleep(300)
+            
     elif choice.lower() == "f":
         # NPC location info
         NPCLocationAPI = requests.get("{}map/locations/markers".format(wynncraftAPI))
@@ -259,7 +257,7 @@ while True:
         else:
             print("Sorry, what you wrote is not associated with any category, please try again once the program restarts itself")
             time.sleep(3)
-            divider()
+            os.system('cls')
             continue
             
         divider()
@@ -285,10 +283,11 @@ while True:
         def itemRequirementsStatsAndIdentifications():
             divider()
             if "averageDPS" in parse_json6[itemName]['base']:
-                print("{}'s average DPS is {}".format(itemName, parse_json6[itemName]['base']['averageDPS']))
+                print("{}'s base average DPS is {}".format(itemName, parse_json6[itemName]['base']['averageDPS']))
                 divider()
             if "base" in parse_json6[itemName]:
                 print("{}'s stats are:".format(itemName))
+                print(" ")
                 for itemStats in parse_json6[itemName]['base']:
                     print(itemStats)
                     divider()
@@ -298,6 +297,7 @@ while True:
                     allRequirements.append(allItemRequirements)
             if allRequirements != []:
                 print("{}'s requirements are:".format(itemName))
+                print(" ")
                 for itemRequirements in parse_json6[itemName]['requirements']:
                     if itemRequirements != "level":
                         print(itemRequirements)
@@ -314,7 +314,7 @@ while True:
                 divider()
                 print("{}'s lore says: {}".format(itemName, parse_json6[itemName]['lore']))
         
-        if "Error" not in parse_json6:
+        if itemName in parse_json6:
             if parse_json6[itemName]['internalName'] in allCharms:
                 # charms info
                 print("{} is a {} charm you obtain from the raid {}, and {} requires you to have atleast combat level {}".format(itemName, parse_json6[itemName]['tier'], parse_json6[itemName]['dropMeta']['name'], itemName, parse_json6[itemName]['requirements']['level']))
@@ -331,7 +331,10 @@ while True:
             elif "type" in parse_json6[itemName]:
                 if parse_json6[itemName]['type'] in allWeaponTypes:
                     # weapon info
-                    print("{} is a {} {} with {} attack speed, {} powder slots and requires you to have atleast combat level {}".format(itemName, parse_json6[itemName]['tier'].capitalize(), parse_json6[itemName]['type'].capitalize(), parse_json6[itemName]['attackSpeed'].replace('_', ' '), parse_json6[itemName]['powderSlots'], parse_json6[itemName]['requirements']['level']))
+                    if "powderSlots" in parse_json6:
+                        print("{} is a {} {} with {} attack speed, {} powder slots and requires you to have atleast combat level {}".format(itemName, parse_json6[itemName]['tier'].capitalize(), parse_json6[itemName]['type'].capitalize(), parse_json6[itemName]['attackSpeed'].replace('_', ' '), parse_json6[itemName]['powderSlots'], parse_json6[itemName]['requirements']['level']))
+                    else:
+                        print("{} is a {} {} with {} attack speed and requires you to have atleast combat level {}".format(itemName, parse_json6[itemName]['tier'].capitalize(), parse_json6[itemName]['type'].capitalize(), parse_json6[itemName]['attackSpeed'].replace('_', ' '), parse_json6[itemName]['requirements']['level']))
                     allWeaponRequirements = ['strength', 'dexterity', 'intelligence', 'agility', 'defence']
                     itemAllRequirements = []
                     for requirement in parse_json6[itemName]['requirements']:
@@ -344,7 +347,7 @@ while True:
                                     print("{}: {}".format(itemRequirements.capitalize(), parse_json6[itemName]['requirements'][itemRequirements]))
                     divider()
                     if "averageDPS" in parse_json6[itemName]['base']:
-                        print("{}'s average DPS is {}".format(itemName, parse_json6[itemName]['base']['averageDPS']))
+                        print("{}'s base average DPS is {}".format(itemName, parse_json6[itemName]['base']['averageDPS']))
                         divider()
                     if "base" in parse_json6[itemName]:
                         allDmgTypes = ['fireDamage', 'waterDamage', 'airDamage', 'thunderDamage', 'earthDamage']
@@ -384,6 +387,7 @@ while True:
                     divider()
                     if "base" in parse_json6[itemName]:
                         print("{}'s stats are:".format(itemName))
+                        print(" ")
                         for itemStats in parse_json6[itemName]['base']:
                             print("{}: {}".format(itemStats, parse_json6[itemName]['base'][itemStats]))
                         divider()
@@ -393,6 +397,7 @@ while True:
                             allRequirements.append(allItemRequirements)
                     if allRequirements != []:
                         print("{}'s other requirements are:".format(itemName))
+                        print(" ")
                         for itemRequirements in parse_json6[itemName]['requirements']:
                             if itemRequirements != "level":
                                 print("{}: {}".format(itemRequirements.capitalize(), parse_json6[itemName]['requirements'][itemRequirements]))
@@ -414,6 +419,7 @@ while True:
                     divider()
                     if "base" in parse_json6[itemName]:
                         print("{}'s stats are:".format(itemName))
+                        print(" ")
                         for itemStats in parse_json6[itemName]['base']:
                             print(itemStats)
                             divider()
@@ -423,6 +429,7 @@ while True:
                             allRequirements.append(allItemRequirements)
                     if allRequirements != []:
                         print("{}'s requirements are:".format(itemName))
+                        print(" ")
                         for itemRequirements in parse_json6[itemName]['requirements']:
                             if itemRequirements != "level":
                                 print(itemRequirements)
@@ -490,7 +497,7 @@ while True:
         else:
             print("Sorry but the word you typed in is not in the database, please try again once the program restarts itself")
             time.sleep(3)
-            divider()
+            os.system('cls')
             continue
         
         continue
@@ -530,6 +537,7 @@ while True:
                 print(" ")
                 print("The guild", territoryGuildNames[n], "owns", guildNum[n], "territories")
                 n += 1
+            divider()
         elif choice3.lower() == "i":
             territoryName = input("Please type in the name of the territory you want to view info about: ")
             divider()
@@ -540,7 +548,7 @@ while True:
             else:
                 print("Sorry but there doesnt seem to be a territory called {}, please try again once the program restarts itself".format(territoryName))
                 time.sleep(3)
-                divider()
+                os.system('cls')
                 continue
 
             arr = []
@@ -574,28 +582,25 @@ while True:
             print("{}'s top-right corner is at {} {} (x, z)".format(territoryName, endX, endZ))
             print("{}'s bottom-right corner is at {} {} (x, z)".format(territoryName, endX, startZ))
             divider()
+
             while True:
                 print("The owner of the territory you are currently looking at ({}) is {} aka {} and they acquired the territory on {}".format(territoryName, parse_json7[territoryName]['guild']['name'], parse_json7[territoryName]['guild']['prefix'], easydate))
                 divider()
-                print("This text will update in 10 minutes")
-                divider()
-                time.sleep(300)
-                print("This text will update in 5 minutes")
-                divider()
-                time.sleep(300)
         elif choice3.lower() == "e":
             quit()
         else:
             print("Sorry, what you wrote is not associated with any category, please try again once the program closes itself")
             time.sleep(3)
-            divider()
+            os.system('cls')
             continue
 
         continue
+    elif choice.lower() == "c":
+        os.system('cls')
     elif choice.lower() == "e":
         quit()
     else:
         print("Sorry, what you wrote is not associated with any category, please try again")
         time.sleep(3)
-        divider()
+        os.system('cls')
         continue
