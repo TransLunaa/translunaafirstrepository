@@ -133,29 +133,31 @@ while True:
         xyz_coordinates = []
 
         NPCType = input("Please type in the name of the npc you want to view the locations of: ")
-        divider()
-        for npcstr in parse_json3:
-            if npcstr['name'] == "{}".format(NPCType):
-                x_coordinates_ = npcstr['x']
-                x_coordinates.append(x_coordinates_)
-                xyz_coordinates.append(x_coordinates)
-                x_coordinates = []
-                y_coordinates_ = npcstr['y']
-                y_coordinates.append(y_coordinates_)
-                xyz_coordinates.append(y_coordinates)
-                y_coordinates = []
-                z_coordinates_ = npcstr['z']
-                z_coordinates.append(z_coordinates_)
-                xyz_coordinates.append(z_coordinates)
-                z_coordinates = []
-                strxyz_coordinates = str(xyz_coordinates)
-                strxyz_coordinates = strxyz_coordinates.replace('[', '')
-                strxyz_coordinates = strxyz_coordinates.replace(']', '')
-                strxyz_coordinates = strxyz_coordinates.replace("'", '')
-                strxyz_coordinates = strxyz_coordinates.replace(',', '')
-                print("Found a {} at these coordinates: {}".format(NPCType, strxyz_coordinates))
-                xyz_coordinates = []
-        divider()
+
+        if NPCType in parse_json3:
+            divider()
+            for npcstr in parse_json3:
+                if npcstr['name'] == "{}".format(NPCType):
+                    x_coordinates_ = npcstr['x']
+                    x_coordinates.append(x_coordinates_)
+                    xyz_coordinates.append(x_coordinates)
+                    x_coordinates = []
+                    y_coordinates_ = npcstr['y']
+                    y_coordinates.append(y_coordinates_)
+                    xyz_coordinates.append(y_coordinates)
+                    y_coordinates = []
+                    z_coordinates_ = npcstr['z']
+                    z_coordinates.append(z_coordinates_)
+                    xyz_coordinates.append(z_coordinates)
+                    z_coordinates = []
+                    strxyz_coordinates = str(xyz_coordinates)
+                    strxyz_coordinates = strxyz_coordinates.replace('[', '')
+                    strxyz_coordinates = strxyz_coordinates.replace(']', '')
+                    strxyz_coordinates = strxyz_coordinates.replace("'", '')
+                    strxyz_coordinates = strxyz_coordinates.replace(',', '')
+                    print("Found a {} at these coordinates: {}".format(NPCType, strxyz_coordinates))
+                    xyz_coordinates = []
+            divider()
 
     elif choice.lower() == "p":
         # player info
