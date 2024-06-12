@@ -117,6 +117,7 @@ while True:
             if memberOnlineNum > 0:
                 print("and those", memberOnlineNum, "online members are:", memberOnlineList)
             divider()
+            break
             
     elif choice.lower() == "f":
         # NPC location info
