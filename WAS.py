@@ -171,6 +171,11 @@ while True:
 
         parse_json4 = json.loads(playerData)
 
+        if parse_json4['Error'] != None:
+            print("The player youre trying to find info about has either changed their username or hasnt played on wynn yet, please try again")
+            divider()
+            continue
+
         if parse_json4['online'] == True:
             print("{} is currently online in world {}".format(playerName, parse_json4['server']))
         else:
