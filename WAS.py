@@ -531,7 +531,7 @@ while True:
             for i in range(len(territoryGuildNames)):
                 territoryDict[territoryGuildNames[n]] = guildNum[n]
                 n += 1
-            for key, value in territoryDict.items():    
+            for key, value in dict(sorted(territoryDict.items(), key=lambda x:x[1], reverse=True)).items():    
                 print(" ")
                 print("The guild", key, "owns", value, "territories")
             print(" ")
