@@ -159,6 +159,10 @@ while True:
                     print("Found a {} at these coordinates: {}".format(NPCType, strxyz_coordinates))
                     xyz_coordinates = []
             divider()
+        else:
+            divider()
+            print("Sorry the name of the npc you typed in doesnt exist please try again once the program restarts itself")
+            divider()
 
     elif choice.lower() == "p":
         # player info
@@ -232,9 +236,6 @@ while True:
 
         print("Please type in a letter that corresponds with a category you want to search")
         divider()
-        print("d = news posted on certain dates")
-        print("p = poster of the news article")
-        print("n = name of the article")
         print("a = all articles")
         print("e = exit")
         divider()
@@ -242,25 +243,7 @@ while True:
         choice2 = input()
         divider()
 
-        if choice2.lower() == "d":
-            newsDate = input("Please type in a day of the month or name of the month or number of the year you want to search for: ")
-            divider()
-            for news in parse_json5:
-                if newsDate in news['date']:
-                    print(news['forumThread'])
-        elif choice2.lower() == "p":
-            newsPoster = input("Pleast type in the name of someone who you want to see the articles from: ")
-            divider()
-            for news in parse_json5:
-                if newsPoster in news['author']:
-                    print(news['forumThread'])
-        elif choice2.lower() == "n":
-            newsKeywords = input("Please type in a keyword to search articles that contain that word: ")
-            divider()
-            for news in parse_json5:
-                if newsKeywords in news['title']:
-                    print(news['forumThread'])
-        elif choice2.lower() == "a":
+        if choice2.lower() == "a":
             for news in parse_json5:
                 print(news['forumThread'])
         elif choice2.lower() == "e":
