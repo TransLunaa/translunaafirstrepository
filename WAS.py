@@ -247,7 +247,7 @@ while True:
             for news in parse_json5:
                 print(news['forumThread'])
         elif choice2.lower() == "e":
-            quit()
+            continue
         else:
             print("Sorry, what you wrote is not associated with any category, please try again once the program restarts itself")
             time.sleep(3)
@@ -505,7 +505,7 @@ while True:
 
         print("Please type in a letter that corresponds with what you want to view: ")
         divider()
-        print("h = how many territories does a guild own")
+        print("h = how many territories does a guild owns")
         print("i = info on a specific territory")
         print("e = exit")
         divider()
