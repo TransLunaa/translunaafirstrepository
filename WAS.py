@@ -527,10 +527,14 @@ while True:
                         territoryGuildNames.append(duplicates)
                         guildNum.append(n)
             n = 0
-            while n < len(territoryGuildNames):
-                print(" ")
-                print("The guild", territoryGuildNames[n], "owns", guildNum[n], "territories")
+            territoryDict = {}
+            for i in range(len(territoryGuildNames)):
+                territoryDict[territoryGuildNames[n]] = guildNum[n]
                 n += 1
+            for key, value in territoryDict.items():    
+                print(" ")
+                print("The guild", key, "owns", value, "territories")
+            print(" ")
             divider()
         elif choice3.lower() == "i":
             territoryName = input("Please type in the name of the territory you want to view info about: ")
