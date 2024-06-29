@@ -2,6 +2,7 @@ import requests
 import json
 import time
 import os
+import string
 
 def divider():
     print("-------------------------------------------------------------------------------------------------------")
@@ -67,7 +68,52 @@ while True:
         for i in range(10):
             arr2.append(arr[x])
             x += 1
-        easydate = ''.join(arr2)
+        x = 0
+        for i in range(len(arr2)):
+            if arr2[x] == "-":
+                arr2.pop(x)
+            else:
+                x += 1
+        easyDates = []
+        x = 0
+        while x <= 3:
+            easyDates.append(arr2[x])
+            x += 1
+        easyDate1 = ''.join(easyDates)
+        easyDates.clear()
+        while x >= 4 and x <= 5:
+            easyDates.append(arr2[x])
+            x += 1
+        easyDate2 = ''.join(easyDates)
+        easyDates.clear()
+        while x >= 6 and x <= 7:
+            easyDates.append(arr2[x])
+            x += 1
+        x = 0
+        if easyDates[1] == "1":
+            x = 1
+        elif easyDates[1] == "2":
+            x = 2
+        elif easyDates[1] == "3":
+            x = 3
+        else:
+            x = 4
+        easyDate3 = ''.join(easyDates)
+        easyDates.clear()
+        monthsDict = {
+            "01": 'January',
+            "02": 'February',
+            "03": 'March',
+            "04": 'April',
+            "05": 'May',
+            "06": 'June',
+            "07": 'July',
+            "08": 'August',
+            "09": 'September',
+            "10": 'October',
+            "11": 'November',
+            "12": 'December'
+        }
         
         # Finds the names of players online from the guild (btw ty dad for helping me code this part) and start of loop
         while True:
@@ -107,7 +153,14 @@ while True:
                 print("The guild you are currently looking at is", guildnameinput, "aka", guildPrefixOrName)
             elif len(guildnameinput) <= 4:
                 print("The guild you are currently looking at is", guildPrefixOrName, "aka", guildnameinput)
-            print("The guild was created on", easydate)
+            if x == 1:
+                print("The guild was created on the {}st of {} {}".format(easyDate3, monthsDict[easyDate2], easyDate1))
+            elif x == 2:
+                print("The guild was created on the {}nd of {} {}".format(easyDate3, monthsDict[easyDate2], easyDate1))
+            elif x == 3:
+                print("The guild was created on the {}rd of {} {}".format(easyDate3, monthsDict[easyDate2], easyDate1))
+            else:
+                print("The guild was created on the {}th of {} {}".format(easyDate3, monthsDict[easyDate2], easyDate1))
             if guildXp < 80:
                 print("The guild is currently at level", guildLevel, "and needs", 100-guildXp, "more percent to level up")
             else:
@@ -539,7 +592,7 @@ while True:
         elif choice3.lower() == "i":
             territoryName = input("Please type in the name of the territory you want to view info about: ")
             divider()
-
+            territoryName = string.capwords(territoryName, sep=None)
             if territoryName in parse_json7:
                 print("Succesfully found a territory by the name {}".format(territoryName))
                 divider()
@@ -557,7 +610,52 @@ while True:
             for i in range(10):
                 arr2.append(arr[x])
                 x += 1
-            easydate = ''.join(arr2)
+            x = 0
+            for i in range(len(arr2)):
+                if arr2[x] == "-":
+                    arr2.pop(x)
+                else:
+                    x += 1
+            easyDates = []
+            x = 0
+            while x <= 3:
+                easyDates.append(arr2[x])
+                x += 1
+            easyDate1 = ''.join(easyDates)
+            easyDates.clear()
+            while x >= 4 and x <= 5:
+                easyDates.append(arr2[x])
+                x += 1
+            easyDate2 = ''.join(easyDates)
+            easyDates.clear()
+            while x >= 6 and x <= 7:
+                easyDates.append(arr2[x])
+                x += 1
+            x = 0
+            if easyDates[1] == "1":
+                x = 1
+            elif easyDates[1] == "2":
+                x = 2
+            elif easyDates[1] == "3":
+                x = 3
+            else:
+                x = 4
+            easyDate3 = ''.join(easyDates)
+            easyDates.clear()
+            monthsDict = {
+                "01": 'January',
+                "02": 'February',
+                "03": 'March',
+                "04": 'April',
+                "05": 'May',
+                "06": 'June',
+                "07": 'July',
+                "08": 'August',
+                "09": 'September',
+                "10": 'October',
+                "11": 'November',
+                "12": 'December'
+            }
 
             startX = abs(parse_json7[territoryName]['location']['start'][0])
             startZ = abs(parse_json7[territoryName]['location']['start'][1])
@@ -581,9 +679,15 @@ while True:
             print("{}'s bottom-right corner is at {} {} (x, z)".format(territoryName, endX, startZ))
             divider()
 
-            while True:
-                print("The owner of the territory you are currently looking at ({}) is {} aka {} and they acquired the territory on {}".format(territoryName, parse_json7[territoryName]['guild']['name'], parse_json7[territoryName]['guild']['prefix'], easydate))
-                divider()
+            if x == 1:
+                print("The owner of the territory you are currently looking at ({}) is {} aka {} and they acquired the territory on the {}st of {} {}".format(territoryName, parse_json7[territoryName]['guild']['name'], parse_json7[territoryName]['guild']['prefix'], easyDate3, monthsDict[easyDate2], easyDate1))
+            elif x == 2:
+                print("The owner of the territory you are currently looking at ({}) is {} aka {} and they acquired the territory on the {}nd of {} {}".format(territoryName, parse_json7[territoryName]['guild']['name'], parse_json7[territoryName]['guild']['prefix'], easyDate3, monthsDict[easyDate2], easyDate1))
+            elif x == 3:
+                print("The owner of the territory you are currently looking at ({}) is {} aka {} and they acquired the territory on the {}rd of {} {}".format(territoryName, parse_json7[territoryName]['guild']['name'], parse_json7[territoryName]['guild']['prefix'], easyDate3, monthsDict[easyDate2], easyDate1))
+            else:
+                print("The owner of the territory you are currently looking at ({}) is {} aka {} and they acquired the territory on the {}th of {} {}".format(territoryName, parse_json7[territoryName]['guild']['name'], parse_json7[territoryName]['guild']['prefix'], easyDate3, monthsDict[easyDate2], easyDate1))
+            divider()
         elif choice3.lower() == "e":
             quit()
         else:
