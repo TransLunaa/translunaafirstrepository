@@ -154,11 +154,11 @@ while True:
             elif len(guildnameinput) <= 4:
                 print("The guild you are currently looking at is", guildPrefixOrName, "aka", guildnameinput)
             if x == 1:
-                print("The guild was created on the {}st of {} {}".format(easyDate3, monthsDict[easyDate2], easyDate1))
+                print(f"The guild was created on the {easyDate3}st of {monthsDict[easyDate2]} {easyDate1}")
             elif x == 2:
-                print("The guild was created on the {}nd of {} {}".format(easyDate3, monthsDict[easyDate2], easyDate1))
+                print(f"The guild was created on the {easyDate3}nd of {monthsDict[easyDate2]} {easyDate1}")
             elif x == 3:
-                print("The guild was created on the {}rd of {} {}".format(easyDate3, monthsDict[easyDate2], easyDate1))
+                print(f"The guild was created on the {easyDate3}rd of {monthsDict[easyDate2]} {easyDate1}")
             else:
                 print(f"The guild was created on the {easyDate3}th of {monthsDict[easyDate2]} {easyDate1}")
             if guildXp < 80:
