@@ -235,6 +235,70 @@ while True:
                 continue
         except KeyError:
             pass
+        
+        arr = []
+        arr2 = []
+        for date in parse_json4['firstJoin']:
+            arr.append(date)
+        x = 0
+        for i in range(10):
+            arr2.append(arr[x])
+            x += 1
+        x = 0
+        for i in range(len(arr2)):
+            if arr2[x] == "-":
+                arr2.pop(x)
+            else:
+                x += 1
+        easyDates = []
+        x = 0
+        while x <= 3:
+            easyDates.append(arr2[x])
+            x += 1
+        easyDate1 = ''.join(easyDates)
+        easyDates.clear()
+        while x >= 4 and x <= 5:
+            easyDates.append(arr2[x])
+            x += 1
+        easyDate2 = ''.join(easyDates)
+        easyDates.clear()
+        while x >= 6 and x <= 7:
+            easyDates.append(arr2[x])
+            x += 1
+        x = 0
+        if easyDates[1] == "1":
+            x = 1
+        elif easyDates[1] == "2":
+            x = 2
+        elif easyDates[1] == "3":
+            x = 3
+        else:
+            x = 4
+        easyDate3 = ''.join(easyDates)
+        easyDates.clear()
+        monthsDict = {
+            "01": 'January',
+            "02": 'February',
+            "03": 'March',
+            "04": 'April',
+            "05": 'May',
+            "06": 'June',
+            "07": 'July',
+            "08": 'August',
+            "09": 'September',
+            "10": 'October',
+            "11": 'November',
+            "12": 'December'
+        }
+
+        if x == 1:
+            print(f"{playerName} first joined on the {easyDate3}st of {monthsDict[easyDate2]} {easyDate1}")
+        elif x == 2:
+            print(f"{playerName} first joined on the {easyDate3}nd of {monthsDict[easyDate2]} {easyDate1}")
+        elif x == 3:
+            print(f"{playerName} first joined on the {easyDate3}rd of {monthsDict[easyDate2]} {easyDate1}")
+        else:
+            print(f"{playerName} first joined on the {easyDate3}th of {monthsDict[easyDate2]} {easyDate1}")
 
         if parse_json4['online'] == True:
             print("{} is currently online in world {}".format(playerName, parse_json4['server']))
@@ -294,10 +358,12 @@ while True:
         divider()
 
         choice2 = input()
-        divider()
 
         if choice2.lower() == "a":
             for news in parse_json5:
+                divider()
+                print("The link to the article called {} by {} is:".format(news['title'], news['author']))
+                print(" ")
                 print(news['forumThread'])
         elif choice2.lower() == "e":
             continue
