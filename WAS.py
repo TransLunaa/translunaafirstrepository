@@ -160,7 +160,7 @@ while True:
             elif x == 3:
                 print("The guild was created on the {}rd of {} {}".format(easyDate3, monthsDict[easyDate2], easyDate1))
             else:
-                print("The guild was created on the {}th of {} {}".format(easyDate3, monthsDict[easyDate2], easyDate1))
+                print(f"The guild was created on the {easyDate3}th of {monthsDict[easyDate2]} {easyDate1}")
             if guildXp < 80:
                 print("The guild is currently at level", guildLevel, "and needs", 100-guildXp, "more percent to level up")
             else:
