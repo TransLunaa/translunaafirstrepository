@@ -289,7 +289,7 @@ while True:
             "10": 'October',
             "11": 'November',
             "12": 'December'
-        }
+        }  
 
         if x == 1:
             print(f"{playerName} first joined on the {easyDate3}st of {monthsDict[easyDate2]} {easyDate1}")
