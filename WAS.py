@@ -5,7 +5,7 @@ import os
 import string
 
 def divider():
-    print("-------------------------------------------------------------------------------------------------------")
+    print("---------------------------------------------------------------------------------------------------------------------")
 
 wynncraftAPI = "https://api.wynncraft.com/v3/"
 
@@ -114,6 +114,7 @@ while True:
             "11": 'November',
             "12": 'December'
         }
+        easyDate3 = int(easyDate3)
         
         # Finds the names of players online from the guild (btw ty dad for helping me code this part) and start of loop
         while True:
@@ -230,7 +231,7 @@ while True:
 
         try:
             if parse_json4['Error'] != None:
-                print("The player youre trying to find info about has either changed their username or hasnt played on wynn yet, please try again")
+                print("The player youre trying to find has either changed their username or hasnt played on wynn yet, please try again")
                 divider()
                 continue
         except KeyError:
@@ -289,7 +290,8 @@ while True:
             "10": 'October',
             "11": 'November',
             "12": 'December'
-        }  
+        }
+        easyDate3 = int(easyDate3)
 
         if x == 1:
             print(f"{playerName} first joined on the {easyDate3}st of {monthsDict[easyDate2]} {easyDate1}")
@@ -341,7 +343,6 @@ while True:
             for i in range(len(raidList)):
                 print("{} of the raids completed in total is {}".format(parse_json4['globalData']['raids']['list'][raidList[dungeonsAndRaidsNum]], raidList[dungeonsAndRaidsNum]))
                 dungeonsAndRaidsNum += 1
-        if dungeonsAndRaidsChoice.lower() == "y":
             divider()
     elif choice.lower() == "n":
         # news info
@@ -722,6 +723,7 @@ while True:
                 "11": 'November',
                 "12": 'December'
             }
+            easyDate3 = int(easyDate3)
 
             startX = abs(parse_json7[territoryName]['location']['start'][0])
             startZ = abs(parse_json7[territoryName]['location']['start'][1])
