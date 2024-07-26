@@ -3,6 +3,7 @@ import json
 import time
 import os
 import string
+import datetime
 
 def divider():
     print("---------------------------------------------------------------------------------------------------------------------")
@@ -293,6 +294,170 @@ while True:
         }
         easyDate3 = int(easyDate3)
 
+        monthsAndYearsLengthDict = {
+            "January": 31,
+            "February1": 28,
+            "February2": 29,
+            "March": 31,
+            "April": 30,
+            "May": 31,
+            "June": 30,
+            "July": 31,
+            "August": 31,
+            "September": 30,
+            "October": 31,
+            "November": 30,
+            "December": 31,
+            1: "January",
+            2: "February",
+            3: "March",
+            4: "April",
+            5: "May",
+            6: "June",
+            7: "July",
+            8: "August",
+            9: "September",
+            10: "October",
+            11: "November",
+            12: "December"
+        }
+        leap = False
+
+        now = datetime.datetime.now()
+        now = str(now)
+
+        arr = []
+        arr2 = []
+        x = 0
+        for letters in now:
+            arr.append(letters)
+        for i in range(10):
+            arr2.append(arr[x])
+            x += 1
+        easyDate = ''.join(arr2)
+        arr = []
+        arr2 = []
+        x = 0
+        for letters in parse_json4['lastJoin']:
+            arr.append(letters)
+        for i in range(10):
+            arr2.append(arr[x])
+            x += 1
+        easyDate4 = ''.join(arr2)
+        easyDate4 = easyDate4.replace("-", "")
+        arr = []
+        arr2 = []
+        arr3 = []
+        x = 0
+        for i in range(4):
+            arr.append(easyDate4[x])
+            x += 1
+        for i in range(2):
+            arr2.append(easyDate4[x])
+            x += 1
+        for i in range(2):
+            arr3.append(easyDate4[x])
+            x += 1
+        targetYear = ''.join(arr)
+        targetMonth = ''.join(arr2)
+        targetDay = ''.join(arr3)
+        targetYear = int(targetYear)
+        targetMonth = int(targetMonth)
+        targetDay = int(targetDay)
+        arr = []
+        arr2 = []
+        arr3 = []
+        x = 0
+        y = 1
+        z = 0
+        for letters in easyDate:
+            arr.append(letters)
+        for letters in arr:
+            if arr[x] == "-":
+                arr.pop(x)
+            else:
+                x += 1
+        easyDate = ''.join(arr)
+        arr = []
+        x = 0
+        for letters in easyDate:
+            if z == 0:
+                if len(arr) == 4:
+                    y += 1
+                    z += 1
+                    x = 0
+            elif z == 1:
+                if len(arr2) == 2:
+                    y += 1
+                    z += 1
+                    x = 0
+            elif z == 2:
+                if len(arr3) == 2:
+                    y += 1
+                    z += 1
+                    x = 0
+            if y == 1:
+                if x <= 3:
+                    arr.append(letters)
+            elif y == 2:
+                if x <= 1:
+                    arr2.append(letters)
+            elif y == 3:
+                if x <= 1:
+                    arr3.append(letters)
+            x += 1
+        year = ''.join(arr)
+        month = ''.join(arr2)
+        day = ''.join(arr3)
+        year = int(year)
+        month = int(month)
+        day = int(day)
+        yearCount = 0
+        monthCount = 0
+        dayCount = 0
+        while True:
+            if year == targetYear and month == targetMonth and day == targetDay:
+                break
+            day -= 1
+            if day == 0:
+                month -= 1
+                monthCount += 1
+                dayCount = 0
+                if month == 0:
+                    month = 12
+                    day = monthsAndYearsLengthDict["December"]
+                    year -= 1
+                    continue
+                if year % 4 == 0:
+                    leap = True
+                else:
+                    leap = False
+                if month == 2:
+                    if leap == True:
+                        day = monthsAndYearsLengthDict["February2"]
+                    elif leap == False:
+                        day = monthsAndYearsLengthDict["February1"]
+                elif month != 2:
+                    month2 = monthsAndYearsLengthDict[month]
+                    day = monthsAndYearsLengthDict[month2]
+
+        today = int(datetime.datetime.now().strftime("%d"))
+        thisMonth = datetime.datetime.now().strftime("%B")
+        if thisMonth == "February":
+            if int(datetime.datetime.now().strftime("%Y")) % 4 == 2:
+                thisMonth == "February2"
+            else:
+                thisMonth == "February1"
+        if day > today:
+            dayCount = monthsAndYearsLengthDict[thisMonth] - day
+        elif today > day:
+            dayCount = today - day
+        elif today == day:
+            dayCount = 0
+        while monthCount >= 12:
+            monthCount -= 12
+            yearCount += 1
+
         if x == 1:
             print(f"{playerName} first joined on the {easyDate3}st of {monthsDict[easyDate2]} {easyDate1}")
         elif x == 2:
@@ -305,7 +470,7 @@ while True:
         if parse_json4['online'] == True:
             print("{} is currently online in world {}".format(playerName, parse_json4['server']))
         else:
-            print("{} is currently offline".format(playerName))
+            print(f"{playerName} is currently offline but were last online {yearCount} year(s), {monthCount} month(s) and {dayCount} day(s) ago")
 
         print("{} has {} hours played in total".format(playerName, parse_json4['playtime']))
 
