@@ -421,7 +421,8 @@ while True:
             day -= 1
             if day == 0:
                 month -= 1
-                monthCount += 1
+                if monthCount > 0:
+                    monthCount += 1
                 dayCount = 0
                 if month == 0:
                     month = 12
