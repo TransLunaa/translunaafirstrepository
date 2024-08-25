@@ -17,7 +17,7 @@ while True:
     print("f = npc finder")
     print("p = player info")
     print("n = wynncraft news")
-    print("i = item database")
+    print("i = item database (doesnt work rn sorry ;w;)")
     print("t = territory info")
     print("c = clear everything in the terminal")
     print("e = exit")
