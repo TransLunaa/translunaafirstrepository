@@ -543,244 +543,182 @@ while True:
         divider()
     elif choice.lower() == "i":
         # item database info
-        itemName = input("Please type in the name of the item you want to view the info of: ")
+        itemTypes = []
+        charms = []
+        itemNames = []
+        itemJson = json.loads(requests.get("https://beta-api.wynncraft.com/v3/item/database?fullResult").text)
+        for types in itemJson:
+            if 'type' in itemJson[types]:
+                itemTypes.append(itemJson[types]['type'])
+            else:
+                charms.append(itemJson[types]['internalName'])
+        itemTypes = list(dict.fromkeys(itemTypes))
+        for items in itemJson:
+            itemNames.append(items.lower())
 
+        itemName = input("Please type in the name of the item you want to view info on: ")
+        itemName = string.capwords(itemName)
         divider()
 
-        itemAPI = requests.get("{}item/search/{}".format(wynncraftAPI, itemName))
+        lettersList = []
+        for letters in itemName:
+            lettersList.append(letters)
 
-        itemData = itemAPI.text
+        x = 0
+        y = 0
+        for letters in lettersList:
+            if lettersList[x] == "-":
+                y = x+1
+                lettersList[y] = lettersList[y].upper()
+            x += 1
+        itemName = ''.join(lettersList)
+        lettersList.clear()
 
-        parse_json6 = json.loads(itemData)
+        itemName = itemName.replace("Of", "of").replace("The", "the")
+        internalItemName = itemJson[itemName]['internalName']
+        findItem = itemJson[itemJson[itemName]['internalName']]
 
-        allWeaponTypes = ['dagger', 'wand', 'bow', 'spear', 'relik']
-        allArmorTypes = ['helmet', 'chestplate', 'leggings', 'boots']
-        allAccessoryTypes = ['ring', 'bracelet', 'necklace']
-        allCharms = ['Charm of the Stone', 'Charm of the Light', 'Charm of the Void', 'Charm of the Worm']
-        allRawStats = ['rawDefence', 'rawStrength', 'rawIntelligence', 'rawAgility', 'rawDexterity']
-
-        # defines the function for tomes
-        def itemRequirementsStatsAndIdentifications():
-            divider()
-            if "averageDPS" in parse_json6[itemName]['base']:
-                print("{}'s base average DPS is {}".format(itemName, parse_json6[itemName]['base']['averageDPS']))
-                divider()
-            if "base" in parse_json6[itemName]:
-                print("{}'s stats are:".format(itemName))
-                print(" ")
-                for itemStats in parse_json6[itemName]['base']:
-                    print(itemStats)
-                    divider()
-            allRequirements = []
-            for allItemRequirements in parse_json6[itemName]['requirements']:
-                if allItemRequirements != "level":
-                    allRequirements.append(allItemRequirements)
-            if allRequirements != []:
-                print("{}'s requirements are:".format(itemName))
-                print(" ")
-                for itemRequirements in parse_json6[itemName]['requirements']:
-                    if itemRequirements != "level":
-                        print(itemRequirements)
-            if "identifications" in parse_json6[itemName]:
-                print("{}'s bonus stats are:".format(itemName))
-                for itemIdentifications in parse_json6[itemName]['identifications']:
-                    print(" ")
-                    if itemIdentifications == "xpBonus":
-                        print("{}: {}".format(itemIdentifications, parse_json6[itemName]['identifications'][itemIdentifications]))
-                    else:
-                        print("Bonus {}: {}".format(itemIdentifications, parse_json6[itemName]['identifications'][itemIdentifications]))
-                print(" ")
-            if "lore" in parse_json6[itemName]:
-                divider()
-                print("{}'s lore says: {}".format(itemName, parse_json6[itemName]['lore']))
-        
-        if itemName in parse_json6:
-            if parse_json6[itemName]['internalName'] in allCharms:
-                # charms info
-                print("{} is a {} charm you obtain from the raid {}, and {} requires you to have atleast combat level {}".format(itemName, parse_json6[itemName]['tier'], parse_json6[itemName]['dropMeta']['name'], itemName, parse_json6[itemName]['requirements']['level']))
-                divider()
-                if "identifications" in parse_json6[itemName]:
-                    print("{}'s bonus stats are:".format(itemName))
-                    for itemIdentifications in parse_json6[itemName]['identifications']:
-                        print(" ")
-                        if itemIdentifications == "xpBonus":
-                            print("{}: {}".format(itemIdentifications, parse_json6[itemName]['identifications'][itemIdentifications]))
+        def itemInfo(isWeapon, itemType):
+            if 'type' in findItem:
+                # prints out the info about the items powder slots, dps, rarity, type and drop restrictions
+                if 'powderSlots' in itemJson[itemName]:
+                    if itemJson[itemName]['dropRestriction'] == "never":
+                        if itemJson[itemName]['powderSlots'] == 1:
+                            if isWeapon == True:
+                                print(f"{internalItemName} is a {itemJson[itemName]['rarity']} {itemJson[itemName][itemType]} with {itemJson[itemName]['powderSlots']} powder slot that never drops from mobs, that also has {itemJson[itemName]['attackSpeed']} attack speed")
+                            else:
+                                print(f"{internalItemName} is a {itemJson[itemName]['rarity']} {itemJson[itemName][itemType]} with {itemJson[itemName]['powderSlots']} powder slot that never drops from mobs")    
+                        elif itemJson[itemName]['powderSlots'] > 1:
+                            if isWeapon == True:
+                                print(f"{internalItemName} is a {itemJson[itemName]['rarity']} {itemJson[itemName][itemType]} with {itemJson[itemName]['powderSlots']} powder slots that never drops from mobs, that also has {itemJson[itemName]['attackSpeed']} attack speed")
+                            else:
+                                print(f"{internalItemName} is a {itemJson[itemName]['rarity']} {itemJson[itemName][itemType]} with {itemJson[itemName]['powderSlots']} powder slots that never drops from mobs")  
                         else:
-                            print("Bonus {}: {}".format(itemIdentifications, parse_json6[itemName]['identifications'][itemIdentifications]))
-                    print(" ")
-            elif "type" in parse_json6[itemName]:
-                if parse_json6[itemName]['type'] in allWeaponTypes:
-                    # weapon info
-                    if "powderSlots" in parse_json6:
-                        print("{} is a {} {} with {} attack speed, {} powder slots and requires you to have atleast combat level {}".format(itemName, parse_json6[itemName]['tier'].capitalize(), parse_json6[itemName]['type'].capitalize(), parse_json6[itemName]['attackSpeed'].replace('_', ' '), parse_json6[itemName]['powderSlots'], parse_json6[itemName]['requirements']['level']))
+                            if isWeapon == True:
+                                print(f"{internalItemName} is a {itemJson[itemName]['rarity']} {itemJson[itemName][itemType]} with no powder slots that also never drops from mobs, that also has {itemJson[itemName]['attackSpeed']} attack speed")
+                            else:
+                                print(f"{internalItemName} is a {itemJson[itemName]['rarity']} {itemJson[itemName][itemType]} with {itemJson[itemName]['powderSlots']} no powder slots also that never drops from mobs")  
                     else:
-                        print("{} is a {} {} with {} attack speed and requires you to have atleast combat level {}".format(itemName, parse_json6[itemName]['tier'].capitalize(), parse_json6[itemName]['type'].capitalize(), parse_json6[itemName]['attackSpeed'].replace('_', ' '), parse_json6[itemName]['requirements']['level']))
-                    allWeaponRequirements = ['strength', 'dexterity', 'intelligence', 'agility', 'defence']
-                    itemAllRequirements = []
-                    for requirement in parse_json6[itemName]['requirements']:
-                        if requirement != "level":
-                            itemAllRequirements.append(requirement)
-                    if itemAllRequirements != []:
-                        print("and also these requirements:")
-                        for itemRequirements in parse_json6[itemName]['requirements']:
-                                if itemRequirements != "level":
-                                    print("{}: {}".format(itemRequirements.capitalize(), parse_json6[itemName]['requirements'][itemRequirements]))
-                    divider()
-                    if "averageDPS" in parse_json6[itemName]['base']:
-                        print("{}'s base average DPS is {}".format(itemName, parse_json6[itemName]['base']['averageDPS']))
-                        divider()
-                    if "base" in parse_json6[itemName]:
-                        allDmgTypes = ['fireDamage', 'waterDamage', 'airDamage', 'thunderDamage', 'earthDamage']
-                        itemAllDamageTypes = []
-                        for itemDamageTypes in parse_json6[itemName]['base']:
-                            if itemDamageTypes != "averageDPS" and itemDamageTypes != "damage":
-                                itemAllDamageTypes.append(itemDamageTypes)
-                        if itemAllDamageTypes != []:
-                            print("{} has these damage types:".format(itemName))
-                            if itemAllDamageTypes == allDmgTypes:
-                                print("{} has rainbow damage".format(itemName))
+                        if itemJson[itemName]['powderSlots'] == 1:
+                            if isWeapon == True:
+                                print(f"{internalItemName} is a {itemJson[itemName]['rarity']} {itemJson[itemName][itemType]} with {itemJson[itemName]['powderSlots']} powder slot, that also has {itemJson[itemName]['attackSpeed']} attack speed")
                             else:
-                                dmgTypesLen = len(itemAllDamageTypes)
-                                dmgTypesNum = 0
-                                for i in range(dmgTypesLen):
-                                    print("{}".format(itemAllDamageTypes[dmgTypesNum]))
-                                    dmgTypesNum += 1
-                            divider()
-                    if "identifications" in parse_json6[itemName]:
-                        print("{}'s bonus stats are:".format(itemName))
-                        for itemIdentifications in parse_json6[itemName]['identifications']:
-                            print(" ")
-                            if itemIdentifications == "xpBonus" or itemIdentifications in allRawStats:
-                                print("{}: {}".format(itemIdentifications, parse_json6[itemName]['identifications'][itemIdentifications]))
+                                print(f"{internalItemName} is a {itemJson[itemName]['rarity']} {itemJson[itemName][itemType]} with {itemJson[itemName]['powderSlots']} powder slot")
+                        elif itemJson[itemName]['powderSlots'] > 1:
+                            if isWeapon == True:
+                                print(f"{internalItemName} is a {itemJson[itemName]['rarity']} {itemJson[itemName][itemType]} with {itemJson[itemName]['powderSlots']} powder slots, that also has {itemJson[itemName]['attackSpeed']} attack speed")
                             else:
-                                print("Bonus {}: {}".format(itemIdentifications, parse_json6[itemName]['identifications'][itemIdentifications]))
-                        print(" ")
-                    if "lore" in parse_json6[itemName]:
-                        divider()
-                        print("{}'s lore says: {}".format(itemName, parse_json6[itemName]['lore']))
-                elif parse_json6[itemName]['type'] in allArmorTypes:
-                    # armor info
-                    if parse_json6[itemName]['type'] == "boots" or parse_json6[itemName]['type'] == "leggings":
-                        print("{} is a pair of {} {} that requires you to have atleast combat level {}".format(itemName, parse_json6[itemName]['tier'], parse_json6[itemName]['type'], parse_json6[itemName]['requirements']['level']))
-                    else:
-                        print("{} is a {} {}".format(itemName, parse_json6[itemName]['tier'], parse_json6[itemName]['type']))
-                    divider()
-                    if "base" in parse_json6[itemName]:
-                        print("{}'s stats are:".format(itemName))
-                        print(" ")
-                        for itemStats in parse_json6[itemName]['base']:
-                            print("{}: {}".format(itemStats, parse_json6[itemName]['base'][itemStats]))
-                        divider()
-                    allRequirements = []
-                    for allItemRequirements in parse_json6[itemName]['requirements']:
-                        if allItemRequirements != "level":
-                            allRequirements.append(allItemRequirements)
-                    if allRequirements != []:
-                        print("{}'s other requirements are:".format(itemName))
-                        print(" ")
-                        for itemRequirements in parse_json6[itemName]['requirements']:
-                            if itemRequirements != "level":
-                                print("{}: {}".format(itemRequirements.capitalize(), parse_json6[itemName]['requirements'][itemRequirements]))
-                    if "identifications" in parse_json6[itemName]:
-                        print("{}'s bonus stats are:".format(itemName))
-                        for itemIdentifications in parse_json6[itemName]['identifications']:
-                            print(" ")
-                            if itemIdentifications == "xpBonus":
-                                print("{}: {}".format(itemIdentifications, parse_json6[itemName]['identifications'][itemIdentifications]))
+                                print(f"{internalItemName} is a {itemJson[itemName]['rarity']} {itemJson[itemName][itemType]} with {itemJson[itemName]['powderSlots']} powder slots")
+                        else:
+                            if isWeapon == True:
+                                print(f"{internalItemName} is a {itemJson[itemName]['rarity']} {itemJson[itemName][itemType]} with no powder slots, that also has {itemJson[itemName]['attackSpeed']} attack speed")
                             else:
-                                print("Bonus {}: {}".format(itemIdentifications, parse_json6[itemName]['identifications'][itemIdentifications]))
-                        print(" ")
-                    if "lore" in parse_json6[itemName]:
-                        divider()
-                        print("{}'s lore says: {}".format(itemName, parse_json6[itemName]['lore']))
-                elif parse_json6[itemName]['type'] in allAccessoryTypes:
-                    # accessory info
-                    print("{} is a {} {} that requires you to have atleast combat level {}".format(itemName, parse_json6[itemName]['tier'], parse_json6[itemName]['accessoryType'], parse_json6[itemName]['requirements']['level']))
-                    divider()
-                    if "base" in parse_json6[itemName]:
-                        print("{}'s stats are:".format(itemName))
-                        print(" ")
-                        for itemStats in parse_json6[itemName]['base']:
-                            print(itemStats)
-                            divider()
-                    allRequirements = []
-                    for allItemRequirements in parse_json6[itemName]['requirements']:
-                        if allItemRequirements != "level":
-                            allRequirements.append(allItemRequirements)
-                    if allRequirements != []:
-                        print("{}'s requirements are:".format(itemName))
-                        print(" ")
-                        for itemRequirements in parse_json6[itemName]['requirements']:
-                            if itemRequirements != "level":
-                                print(itemRequirements)
-                    if "identifications" in parse_json6[itemName]:
-                        print("{}'s bonus stats are:".format(itemName))
-                        for itemIdentifications in parse_json6[itemName]['identifications']:
-                            print(" ")
-                            if itemIdentifications == "xpBonus":
-                                print("{}: {}".format(itemIdentifications, parse_json6[itemName]['identifications'][itemIdentifications]))
-                            else:
-                                print("Bonus {}: {}".format(itemIdentifications, parse_json6[itemName]['identifications'][itemIdentifications]))
-                        print(" ")
-                    if "lore" in parse_json6[itemName]:
-                        divider()
-                        print("{}'s lore says: {}".format(itemName, parse_json6[itemName]['lore']))
-            elif "tomeType" in parse_json6[itemName]:
-                # tome info
-                if parse_json6[itemName]['raidReward'] == False:
-                    print("{} is a {} tome that requires you to have atleast combat level {}".format(itemName, parse_json6[itemName]['tier'], parse_json6[itemName]['requirements']['level']))
+                                print(f"{internalItemName} is a {itemJson[itemName]['rarity']} {itemJson[itemName][itemType]} with {itemJson[itemName]['powderSlots']} no powder slots")
                 else:
-                    print("{} is a {} tome that requires you to have atleast combat level {} and that you can obtain from {}".format(itemName, parse_json6[itemName]['tier'], parse_json6[itemName]['requirements']['level'], parse_json6[itemName]['dropMeta']['name']))
-                itemRequirementsStatsAndIdentifications()
-            elif "ingredientPositionModifiers" in parse_json6[itemName]:
-                # ingredient info
-                def ingredientInfoDef(a, b, c):
-                    if parse_json6[itemName][a][b] < 0:
-                        print("{} decreases the {} of an item by {}".format(itemName, c, parse_json6[itemName]['itemOnlyIDs']['durabilityModifier']))
-                    elif parse_json6[itemName][a][b] > 0:
-                        print("{} increases the {} of an item by {}".format(itemName, c, parse_json6[itemName]['itemOnlyIDs']['durabilityModifier']))
+                    if itemJson[itemName]['type'] == "accessory":
+                        if itemJson[itemName]['dropRestriction'] == "lootchest":
+                            print(f"{internalItemName} is a {itemJson[itemName]['rarity']} {itemJson[itemName][itemType]} that you can find in chests")
+                        else:
+                            print(f"{internalItemName} is a {itemJson[itemName]['rarity']} {itemJson[itemName][itemType]} that doesnt appear in chests")
+                    elif itemJson[itemName]['type'] == "tome":
+                        if itemJson[itemName][itemType] == "guild_tome" or itemJson[itemName]['raidReward'] == False:
+                            print(f"{internalItemName} is a {itemJson[itemName]['rarity']} {itemJson[itemName][itemType].replace('_', ' ')}")
+                        else:
+                            print(f"{internalItemName} is a {itemJson[itemName]['rarity']} {itemJson[itemName][itemType]} that you can get from raids")
+                    elif itemJson[itemName]['type'] == "charm":
+                        print(f"{internalItemName} is a {itemJson[itemName]['rarity']} charm that you can get from the {itemJson[itemName]['dropMeta']['name']} raid")
+                if isWeapon == True:
+                    print(f"and {internalItemName}'s base average dps is {itemJson[itemName]['averageDps']}")
+                divider()
+                if 'lore' in findItem:
+                    # find and print the description of the item
+                    print(f"{internalItemName}'s description says:")
+                    print(" ")
+                    print(f'"{itemJson[itemName]["lore"]}"')
+                    print(" ")
+                    divider()
+                if 'base' in findItem:
+                    # find and print the base stats the item gives
+                    print(f"{internalItemName}'s base stats are:")
+                    baseStatsListNames = []
+                    baseStatsList = []
+                    baseStats = {}
+                    for stats in itemJson[itemName]['base']:
+                        baseStatsListNames.append(stats)
+                    x = 0
+                    for i in range(len(baseStatsListNames)):
+                        baseStatsList.append(itemJson[itemName]['base'][baseStatsListNames[x]])
+                        baseStats[baseStatsListNames[x]] = baseStatsList[x]
+                        x += 1
+                    baseStatsList.clear()
+                    baseStatsListNames.clear()
+                    print(" ")
+                    for key, value in baseStats.items():
+                        print(f"{key.replace('base', '')}: {value}")
+                    print(" ")
+                    divider()
+                if 'requirements' in findItem:
+                    # finds the items requirements and prints them out
+                    requirementsList = []
+                    for requirements in itemJson[itemName]['requirements']:
+                        requirementsList.append(requirements)
+                    requirementsList.remove("level")
+                    if requirementsList != []:
+                        print(f"You have to be combat level {itemJson[itemName]['requirements']['level']} in order to use {internalItemName} and also have:")
+                        print(" ")
+                        if isWeapon == True:
+                            requirementsList.remove("classRequirement")
+                        requirementsList2 = []
+                        for i in range(0, len(requirementsList)):
+                            requirementsList2.append(itemJson[itemName]['requirements'][requirementsList[i]])
+                        requirementsDict = {}
+                        for i in range(0, len(requirementsList)):
+                            requirementsDict[requirementsList[i]] = requirementsList2[i]
+                        requirementsList.clear()
+                        requirementsList2.clear()
+                        for key, value in requirementsDict.items():
+                            print(f"{value} {key}")
+                        print(" ")
                     else:
-                        print("{} doesnt change the {} of an item".format(itemName, c))
+                        print(f"You have to be combat level {itemJson[itemName]['requirements']['level']} in order to use {internalItemName}")
                     divider()
-                print("{} is a tier {} material".format(itemName, parse_json6[itemName]['tier']))
-                print("that is dropped by:")
-                for mobThatDropsItem in parse_json6[itemName]['droppedBy']:
-                    print(mobThatDropsItem)
-                divider()
-                print("{} requires you to have atleast level {} in:".format(itemName, parse_json6[itemName]['requirements']['level']))
-                for skillRequirement in parse_json6[itemName]['requirements']['skills']:
-                    print(skillRequirement.capitalize())
-                divider()
-                ingredientInfoDef('itemOnlyIDs', 'durabilityModifier', 'durability')
-                ingredientInfoDef('consumableOnlyIDs', 'duration', 'duration')
-                ingredientInfoDef('consumableOnlyIDs', 'charges', 'charges')
-                print("the item {} creates have these requirements added to:".format(itemName))
-                for skillRequirements in parse_json6[itemName]['itemOnlyIDs']:
-                    if skillRequirements != "durabilityModifier":
-                        if skillRequirements != 0:
-                            print("{}: {}".format(skillRequirements, parse_json6[itemName]['itemOnlyIDs'][skillRequirements]))
-                positionModifiers = []
-                for ingredientPositions in parse_json6[itemName]['ingredientPositionModifiers']:
-                    if ingredientPositions != 0:
-                        positionModifiers.append(ingredientPositions)
-                if positionModifiers != []:
+                if 'identifications' in findItem:
+                    # finds the items id's and also prints them out
+                    identificationList = []
+                    for id in itemJson[itemName]['identifications']:
+                        identificationList.append(id)
+                    minMaxValue = []
+                    idDict = {}
+                    for i in range(len(identificationList)):
+                        identification = itemJson[itemName]['identifications'][identificationList[i]]
+                        try:
+                            minMaxValue.append(identification['min'])
+                            minMaxValue.append(identification['max'])
+                            try:
+                                idDict[identificationList[i]] = minMaxValue
+                            except IndexError:
+                                break
+                            minMaxValue = []
+                        except TypeError:
+                            pass
+                    print(" ")
+                    for key, value in idDict.items():
+                        print(f"The minimal amount of {key} you can get is: {value[0]}")
+                        print(f"The maximum amount of {key} you can get is: {value[1]}")
+                        print(" ")
                     divider()
-                    print("{} also has these position modifiers:".format(itemName))
-                    for itemPositionModifiers in parse_json6[itemName]['ingredientPositionModifiers']:
-                        if itemPositionModifiers != 0:
-                            print("{}: {}".format(itemPositionModifiers, parse_json6[itemName]['ingredientPositionModifiers'][itemPositionModifiers]))
-            elif "craftable" in parse_json6[itemName]:
-                # resource info
-                print("{} is a tier 2 resource that requires you to have atleast {} level {}, and you can use it to make:".format(itemName, parse_json6[itemName]['requirements']['skills'], parse_json6[itemName]['requirements']['level']))
-                for craftableItems in parse_json6[itemName]['craftable']:
-                    print(craftableItems.capitalize())
-        else:
-            print("Sorry but the word you typed in is not in the database, please try again once the program restarts itself")
-            time.sleep(3)
-            divider()
+
+        if itemName.lower() not in itemNames:
+            print(f"Sorry but the item name {itemName} isnt in the database, please try again")
             continue
-        
-        continue
+
+        itemType2 = str(itemJson[itemName]['type'] + 'Type')
+
+        if itemJson[itemName]['type'] == "weapon":
+            itemInfo(True, itemType2)
+        else:
+            itemInfo(False, itemType2)
+            continue
     elif choice.lower() == "t":
         # territory info
         territoryAPI = requests.get("{}guild/list/territory".format(wynncraftAPI))
