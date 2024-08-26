@@ -8,7 +8,7 @@ import datetime
 def divider():
     print("---------------------------------------------------------------------------------------------------------------------")
 
-wynncraftAPI = "https://api.wynncraft.com/v3/"
+wynncraftAPI = "https://beta-api.wynncraft.com/v3/"
 
 while True:
     print("Please type in a letter that corresponds with what you want to see")
