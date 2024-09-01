@@ -423,7 +423,7 @@ while True:
                 month -= 1
                 if monthCount > 0:
                     monthCount += 1
-                dayCount = 0
+                    dayCount = 0
                 if month == 0:
                     month = 12
                     day = monthsAndYearsLengthDict["December"]
