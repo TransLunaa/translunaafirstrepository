@@ -445,7 +445,7 @@ while True:
         today = int(datetime.datetime.now().strftime("%d"))
         thisMonth = datetime.datetime.now().strftime("%B")
         if thisMonth == "February":
-            if int(datetime.datetime.now().strftime("%Y")) % 4 == 2:
+            if int(datetime.datetime.now().strftime("%Y")) % 2 == 0:
                 thisMonth == "February2"
             else:
                 thisMonth == "February1"
