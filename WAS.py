@@ -27,7 +27,7 @@ while True:
 
     divider()
     if choice.lower() == "g":
-        # Guild info
+        # guild info
         guildnameinput = str(input("Please type in the name or prefix of the guild you want to view the info of: "))
         
         if len(guildnameinput) > 4:
@@ -172,6 +172,15 @@ while True:
             if memberOnlineNum > 0:
                 print("and those", memberOnlineNum, "online members are:", memberOnlineList)
             divider()
+            choice = input(f"Do you want to see the list of players that are apart of {parse_json['name']}? (y/n): ")
+            divider()
+            uuidList = []
+            if choice.lower() == "y":
+                for roles in parse_json['members']:
+                    if roles != "total":
+                        for username in parse_json['members'][roles]:
+                            print(username)
+                divider()
             break
             
     elif choice.lower() == "f":
