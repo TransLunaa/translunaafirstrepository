@@ -80,12 +80,12 @@ while True:
         while x <= 3:
             easyDates.append(arr2[x])
             x += 1
-        easyDate1 = ''.join(easyDates)
+        yearDate = ''.join(easyDates)
         easyDates.clear()
         while x >= 4 and x <= 5:
             easyDates.append(arr2[x])
             x += 1
-        easyDate2 = ''.join(easyDates)
+        monthDate = ''.join(easyDates)
         easyDates.clear()
         while x >= 6 and x <= 7:
             easyDates.append(arr2[x])
@@ -99,7 +99,7 @@ while True:
             x = 3
         else:
             x = 4
-        easyDate3 = ''.join(easyDates)
+        dayDate = ''.join(easyDates)
         easyDates.clear()
         monthsDict = {
             "01": 'January',
@@ -115,7 +115,7 @@ while True:
             "11": 'November',
             "12": 'December'
         }
-        easyDate3 = int(easyDate3)
+        dayDate = int(dayDate)
         
         # Finds the names of players online from the guild (btw ty dad for helping me code this part) and start of loop
         while True:
@@ -156,13 +156,13 @@ while True:
             elif len(guildnameinput) <= 4:
                 print("The guild you are currently looking at is", guildPrefixOrName, "aka", guildnameinput)
             if x == 1:
-                print(f"The guild was created on the {easyDate3}st of {monthsDict[easyDate2]} {easyDate1}")
+                print(f"The guild was created on the {dayDate}st of {monthsDict[monthDate]} {yearDate}")
             elif x == 2:
-                print(f"The guild was created on the {easyDate3}nd of {monthsDict[easyDate2]} {easyDate1}")
+                print(f"The guild was created on the {dayDate}nd of {monthsDict[monthDate]} {yearDate}")
             elif x == 3:
-                print(f"The guild was created on the {easyDate3}rd of {monthsDict[easyDate2]} {easyDate1}")
+                print(f"The guild was created on the {dayDate}rd of {monthsDict[monthDate]} {yearDate}")
             else:
-                print(f"The guild was created on the {easyDate3}th of {monthsDict[easyDate2]} {easyDate1}")
+                print(f"The guild was created on the {dayDate}th of {monthsDict[monthDate]} {yearDate}")
             if guildXp < 80:
                 print("The guild is currently at level", guildLevel, "and needs", 100-guildXp, "more percent to level up")
             else:
@@ -266,12 +266,12 @@ while True:
         while x <= 3:
             easyDates.append(arr2[x])
             x += 1
-        easyDate1 = ''.join(easyDates)
+        yearDate = ''.join(easyDates)
         easyDates.clear()
         while x >= 4 and x <= 5:
             easyDates.append(arr2[x])
             x += 1
-        easyDate2 = ''.join(easyDates)
+        monthDate = ''.join(easyDates)
         easyDates.clear()
         while x >= 6 and x <= 7:
             easyDates.append(arr2[x])
@@ -285,8 +285,9 @@ while True:
             x = 3
         else:
             x = 4
-        easyDate3 = ''.join(easyDates)
+        dayDate = ''.join(easyDates)
         easyDates.clear()
+
         monthsDict = {
             "01": 'January',
             "02": 'February',
@@ -301,186 +302,34 @@ while True:
             "11": 'November',
             "12": 'December'
         }
-        easyDate3 = int(easyDate3)
-
-        monthsAndYearsLengthDict = {
-            "January": 31,
-            "February1": 28,
-            "February2": 29,
-            "March": 31,
-            "April": 30,
-            "May": 31,
-            "June": 30,
-            "July": 31,
-            "August": 31,
-            "September": 30,
-            "October": 31,
-            "November": 30,
-            "December": 31,
-            1: "January",
-            2: "February",
-            3: "March",
-            4: "April",
-            5: "May",
-            6: "June",
-            7: "July",
-            8: "August",
-            9: "September",
-            10: "October",
-            11: "November",
-            12: "December"
-        }
-        leap = False
-
-        now = datetime.datetime.now()
-        now = str(now)
-
-        arr = []
-        arr2 = []
-        x = 0
-        for letters in now:
-            arr.append(letters)
-        for i in range(10):
-            arr2.append(arr[x])
-            x += 1
-        easyDate = ''.join(arr2)
-        arr = []
-        arr2 = []
-        x = 0
-        for letters in parse_json4['lastJoin']:
-            arr.append(letters)
-        for i in range(10):
-            arr2.append(arr[x])
-            x += 1
-        easyDate4 = ''.join(arr2)
-        easyDate4 = easyDate4.replace("-", "")
-        arr = []
-        arr2 = []
-        arr3 = []
-        x = 0
-        for i in range(4):
-            arr.append(easyDate4[x])
-            x += 1
-        for i in range(2):
-            arr2.append(easyDate4[x])
-            x += 1
-        for i in range(2):
-            arr3.append(easyDate4[x])
-            x += 1
-        targetYear = ''.join(arr)
-        targetMonth = ''.join(arr2)
-        targetDay = ''.join(arr3)
-        targetYear = int(targetYear)
-        targetMonth = int(targetMonth)
-        targetDay = int(targetDay)
-        arr = []
-        arr2 = []
-        arr3 = []
-        x = 0
-        y = 1
-        z = 0
-        for letters in easyDate:
-            arr.append(letters)
-        for letters in arr:
-            if arr[x] == "-":
-                arr.pop(x)
-            else:
-                x += 1
-        easyDate = ''.join(arr)
-        arr = []
-        x = 0
-        for letters in easyDate:
-            if z == 0:
-                if len(arr) == 4:
-                    y += 1
-                    z += 1
-                    x = 0
-            elif z == 1:
-                if len(arr2) == 2:
-                    y += 1
-                    z += 1
-                    x = 0
-            elif z == 2:
-                if len(arr3) == 2:
-                    y += 1
-                    z += 1
-                    x = 0
-            if y == 1:
-                if x <= 3:
-                    arr.append(letters)
-            elif y == 2:
-                if x <= 1:
-                    arr2.append(letters)
-            elif y == 3:
-                if x <= 1:
-                    arr3.append(letters)
-            x += 1
-        year = ''.join(arr)
-        month = ''.join(arr2)
-        day = ''.join(arr3)
-        year = int(year)
-        month = int(month)
-        day = int(day)
-        yearCount = 0
-        monthCount = 0
-        dayCount = 0
-        while True:
-            if year == targetYear and month == targetMonth and day == targetDay:
-                break
-            day -= 1
-            if day == 0:
-                month -= 1
-                if monthCount > 0:
-                    monthCount += 1
-                    dayCount = 0
-                if month == 0:
-                    month = 12
-                    day = monthsAndYearsLengthDict["December"]
-                    year -= 1
-                    continue
-                if year % 4 == 0:
-                    leap = True
-                else:
-                    leap = False
-                if month == 2:
-                    if leap == True:
-                        day = monthsAndYearsLengthDict["February2"]
-                    elif leap == False:
-                        day = monthsAndYearsLengthDict["February1"]
-                elif month != 2:
-                    month2 = monthsAndYearsLengthDict[month]
-                    day = monthsAndYearsLengthDict[month2]
-
-        today = int(datetime.datetime.now().strftime("%d"))
-        thisMonth = datetime.datetime.now().strftime("%B")
-        if thisMonth == "February":
-            if int(datetime.datetime.now().strftime("%Y")) % 2 == 0:
-                thisMonth == "February2"
-            else:
-                thisMonth == "February1"
-        if day > today:
-            dayCount = monthsAndYearsLengthDict[thisMonth] - day
-        elif today > day:
-            dayCount = today - day
-        elif today == day:
-            dayCount = 0
-        while monthCount >= 12:
-            monthCount -= 12
-            yearCount += 1
+        
+        def countDays(targetDate):
+            dayCounter = 1
+            now = None
+            for i in range(int(datetime.datetime.now().strftime("%Y"))):
+                if now != targetDate:
+                    dayCounter += 1
+                    now = (datetime.datetime.now() - datetime.timedelta(days = dayCounter)).strftime("%Y-%m-%d")
+            print(f"{playerName} is currently offline but was last online {dayCounter} day(s) ago")
 
         if x == 1:
-            print(f"{playerName} first joined on the {easyDate3}st of {monthsDict[easyDate2]} {easyDate1}")
+            print(f"{playerName} first joined on the {dayDate}st of {monthsDict[monthDate]} {yearDate}")
         elif x == 2:
-            print(f"{playerName} first joined on the {easyDate3}nd of {monthsDict[easyDate2]} {easyDate1}")
+            print(f"{playerName} first joined on the {dayDate}nd of {monthsDict[monthDate]} {yearDate}")
         elif x == 3:
-            print(f"{playerName} first joined on the {easyDate3}rd of {monthsDict[easyDate2]} {easyDate1}")
+            print(f"{playerName} first joined on the {dayDate}rd of {monthsDict[monthDate]} {yearDate}")
         else:
-            print(f"{playerName} first joined on the {easyDate3}th of {monthsDict[easyDate2]} {easyDate1}")
+            print(f"{playerName} first joined on the {dayDate}th of {monthsDict[monthDate]} {yearDate}")
 
         if parse_json4['online'] == True:
             print("{} is currently online in world {}".format(playerName, parse_json4['server']))
         else:
-            print(f"{playerName} is currently offline but were last online {yearCount} year(s), {monthCount} month(s) and {dayCount} day(s) ago")
+            lastDateJoinedList = []
+            for date in parse_json4['lastJoin']:
+                lastDateJoinedList.append(date)
+            for i in range(17):
+                lastDateJoinedList.pop(-1)
+            countDays("".join(lastDateJoinedList))
 
         print("{} has {} hours played in total".format(playerName, parse_json4['playtime']))
 
@@ -801,12 +650,12 @@ while True:
             while x <= 3:
                 easyDates.append(arr2[x])
                 x += 1
-            easyDate1 = ''.join(easyDates)
+            yearDate = ''.join(easyDates)
             easyDates.clear()
             while x >= 4 and x <= 5:
                 easyDates.append(arr2[x])
                 x += 1
-            easyDate2 = ''.join(easyDates)
+            monthDate = ''.join(easyDates)
             easyDates.clear()
             while x >= 6 and x <= 7:
                 easyDates.append(arr2[x])
@@ -820,7 +669,7 @@ while True:
                 x = 3
             else:
                 x = 4
-            easyDate3 = ''.join(easyDates)
+            dayDate = ''.join(easyDates)
             easyDates.clear()
             monthsDict = {
                 "01": 'January',
@@ -836,7 +685,7 @@ while True:
                 "11": 'November',
                 "12": 'December'
             }
-            easyDate3 = int(easyDate3)
+            dayDate = int(dayDate)
 
             startX = abs(parse_json7[territoryName]['location']['start'][0])
             startZ = abs(parse_json7[territoryName]['location']['start'][1])
@@ -861,13 +710,13 @@ while True:
             divider()
 
             if x == 1:
-                print("The owner of the territory you are currently looking at ({}) is {} aka {} and they acquired the territory on the {}st of {} {}".format(territoryName, parse_json7[territoryName]['guild']['name'], parse_json7[territoryName]['guild']['prefix'], easyDate3, monthsDict[easyDate2], easyDate1))
+                print("The owner of the territory you are currently looking at ({}) is {} aka {} and they acquired the territory on the {}st of {} {}".format(territoryName, parse_json7[territoryName]['guild']['name'], parse_json7[territoryName]['guild']['prefix'], dayDate, monthsDict[monthDate], yearDate))
             elif x == 2:
-                print("The owner of the territory you are currently looking at ({}) is {} aka {} and they acquired the territory on the {}nd of {} {}".format(territoryName, parse_json7[territoryName]['guild']['name'], parse_json7[territoryName]['guild']['prefix'], easyDate3, monthsDict[easyDate2], easyDate1))
+                print("The owner of the territory you are currently looking at ({}) is {} aka {} and they acquired the territory on the {}nd of {} {}".format(territoryName, parse_json7[territoryName]['guild']['name'], parse_json7[territoryName]['guild']['prefix'], dayDate, monthsDict[monthDate], yearDate))
             elif x == 3:
-                print("The owner of the territory you are currently looking at ({}) is {} aka {} and they acquired the territory on the {}rd of {} {}".format(territoryName, parse_json7[territoryName]['guild']['name'], parse_json7[territoryName]['guild']['prefix'], easyDate3, monthsDict[easyDate2], easyDate1))
+                print("The owner of the territory you are currently looking at ({}) is {} aka {} and they acquired the territory on the {}rd of {} {}".format(territoryName, parse_json7[territoryName]['guild']['name'], parse_json7[territoryName]['guild']['prefix'], dayDate, monthsDict[monthDate], yearDate))
             else:
-                print("The owner of the territory you are currently looking at ({}) is {} aka {} and they acquired the territory on the {}th of {} {}".format(territoryName, parse_json7[territoryName]['guild']['name'], parse_json7[territoryName]['guild']['prefix'], easyDate3, monthsDict[easyDate2], easyDate1))
+                print("The owner of the territory you are currently looking at ({}) is {} aka {} and they acquired the territory on the {}th of {} {}".format(territoryName, parse_json7[territoryName]['guild']['name'], parse_json7[territoryName]['guild']['prefix'], dayDate, monthsDict[monthDate], yearDate))
             divider()
         elif choice3.lower() == "e":
             quit()
