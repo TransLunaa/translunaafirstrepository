@@ -305,7 +305,7 @@ while True:
         
         def countDays(targetDate):
             dayCounter = 0
-            now = None
+            now = datetime.datetime.now().strftime("%Y-%m-%d")
             for i in range(int(datetime.datetime.now().strftime("%Y"))):
                 if now != targetDate:
                     dayCounter += 1
